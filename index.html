@@ -8,25 +8,26 @@
         body {
             font-family: 'Noto Sans KR', sans-serif;
             margin: 0;
-            padding: 20px;
+            padding: 10px;
             background-color: #f5f5f5;
         }
         .container {
             max-width: 1000px;
             margin: 0 auto;
             background-color: white;
-            padding: 20px;
+            padding: 15px;
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0,0,0,0.1);
         }
         h1 {
             text-align: center;
             color: #333;
-            margin-bottom: 30px;
+            margin-bottom: 20px;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 15px;
+            flex-wrap: wrap;
         }
         .title-logo {
             height: 50px;
@@ -48,7 +49,7 @@
         }
         th, td {
             border: 1px solid #ddd;
-            padding: 12px;
+            padding: 8px;
             text-align: center;
         }
         th {
@@ -71,6 +72,7 @@
             display: flex;
             justify-content: center;
             gap: 3px;
+            flex-wrap: wrap;
         }
         .recent span {
             display: inline-block;
@@ -87,6 +89,71 @@
         .recent .loss-mark {
             background-color: #ffcdd2;
         }
+        
+        /* 반응형 디자인을 위한 미디어 쿼리 */
+        @media screen and (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            h1 {
+                font-size: 20px;
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .title-logo {
+                height: 40px;
+            }
+            
+            th, td {
+                padding: 6px 4px;
+                font-size: 14px;
+            }
+            
+            .recent span {
+                width: 16px;
+                height: 16px;
+                line-height: 16px;
+                font-size: 10px;
+            }
+            
+            /* 테이블 스크롤 처리 */
+            .table-container {
+                width: 100%;
+                overflow-x: auto;
+            }
+        }
+        
+        @media screen and (max-width: 480px) {
+            body {
+                padding: 5px;
+            }
+            
+            h1 {
+                font-size: 18px;
+            }
+            
+            .title-logo {
+                height: 30px;
+            }
+            
+            h2 {
+                font-size: 16px;
+            }
+            
+            th, td {
+                padding: 4px 2px;
+                font-size: 12px;
+            }
+            
+            .recent span {
+                width: 14px;
+                height: 14px;
+                line-height: 14px;
+                font-size: 8px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -98,40 +165,44 @@
 
         <div class="section">
             <h2>선수 기록</h2>
-            <table id="player-stats">
-                <thead>
-                    <tr>
-                        <th>순위</th>
-                        <th>선수명</th>
-                        <th>학교</th>
-                        <th>경기수</th>
-                        <th>승</th>
-                        <th>패</th>
-                        <th>최근전적</th>
-                        <th>승점</th>
-                    </tr>
-                </thead>
-                <tbody id="player-stats-body">
-                    <!-- 데이터는 JavaScript로 기입됨 -->
-                </tbody>
-            </table>
+            <div class="table-container">
+                <table id="player-stats">
+                    <thead>
+                        <tr>
+                            <th>순위</th>
+                            <th>선수명</th>
+                            <th>학교</th>
+                            <th>경기수</th>
+                            <th>승</th>
+                            <th>패</th>
+                            <th>최근전적</th>
+                            <th>승점</th>
+                        </tr>
+                    </thead>
+                    <tbody id="player-stats-body">
+                        <!-- 데이터는 JavaScript로 기입됨 -->
+                    </tbody>
+                </table>
+            </div>
         </div>
 
         <div class="section">
             <h2>최근 경기 결과</h2>
-            <table id="recent-matches">
-                <thead>
-                    <tr>
-                        <th>날짜</th>
-                        <th>A팀</th>
-                        <th>점수</th>
-                        <th>B팀</th>
-                    </tr>
-                </thead>
-                <tbody id="recent-matches-body">
-                    <!-- 데이터는 JavaScript로 기입됨 -->
-                </tbody>
-            </table>
+            <div class="table-container">
+                <table id="recent-matches">
+                    <thead>
+                        <tr>
+                            <th>날짜</th>
+                            <th>A팀</th>
+                            <th>점수</th>
+                            <th>B팀</th>
+                        </tr>
+                    </thead>
+                    <tbody id="recent-matches-body">
+                        <!-- 데이터는 JavaScript로 기입됨 -->
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 
@@ -145,7 +216,7 @@
                 wins: 4,
                 losses: 1,
                 points: 13,
-                recent: ["승", "승", "패", "승", "승",]
+                recent: ["승", "승", "패", "승", "승"]
             },
             {
                 name: "박지훈",
