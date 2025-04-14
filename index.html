@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>인천 중학생 3:3 농구 매칭</title>
+    <style>
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+        .title-logo {
+            height: 50px;
+            vertical-align: middle;
+        }
+        .section {
+            margin-bottom: 30px;
+        }
+        h2 {
+            margin-bottom: 15px;
+            color: #444;
+            border-bottom: 2px solid #e0e0e0;
+            padding-bottom: 5px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: center;
+        }
+        th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        tr:hover {
+            background-color: #f0f0f0;
+        }
+        .win {
+            color: blue;
+        }
+        .loss {
+            color: red;
+        }
+        .recent {
+            display: flex;
+            justify-content: center;
+            gap: 3px;
+        }
+        .recent span {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            line-height: 20px;
+            text-align: center;
+            border-radius: 50%;
+            font-size: 12px;
+        }
+        .recent .win-mark {
+            background-color: #c8e6c9;
+        }
+        .recent .loss-mark {
+            background-color: #ffcdd2;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>
+            <img src="슛메이트 로고.png" alt="농구 로고" class="title-logo">
+            인천 중학생 3:3 농구 매칭
+        </h1>
+
+        <div class="section">
+            <h2>선수 기록</h2>
+            <table id="player-stats">
+                <thead>
+                    <tr>
+                        <th>순위</th>
+                        <th>선수명</th>
+                        <th>학교</th>
+                        <th>경기수</th>
+                        <th>승</th>
+                        <th>패</th>
+                        <th>최근전적</th>
+                        <th>승점</th>
+                    </tr>
+                </thead>
+                <tbody id="player-stats-body">
+                    <!-- 데이터는 JavaScript로 기입됨 -->
+                </tbody>
+            </table>
+        </div>
+
+        <div class="section">
+            <h2>최근 경기 결과</h2>
+            <table id="recent-matches">
+                <thead>
+                    <tr>
+                        <th>날짜</th>
+                        <th>A팀</th>
+                        <th>점수</th>
+                        <th>B팀</th>
+                    </tr>
+                </thead>
+                <tbody id="recent-matches-body">
+                    <!-- 데이터는 JavaScript로 기입됨 -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        // 선수 데이터
+        const players = [
+            {
+                name: "김민준",
+                school: "인천중앙중",
+                games: 5,
+                wins: 4,
+                losses: 1,
+                points: 13,
+                recent: ["승", "승", "패", "승", "승",]
+            },
+            {
+                name: "박지훈",
+                school: "부평제일중",
+                games: 5,
+                wins: 3,
+                losses: 2,
+                points: 11,
+                recent: ["승", "패", "승", "승", "패"]
+            },
+            {
+                name: "이현우",
+                school: "계양중",
+                games: 4,
+                wins: 2,
+                losses: 2,
+                points: 8,
+                recent: ["승", "패", "승", "패"]
+            },
+            {
+                name: "정도윤",
+                school: "서구중",
+                games: 4,
+                wins: 1,
+                losses: 3,
+                points: 6,
+                recent: ["패", "패", "승", "패"]
+            },
+            {
+                name: "강준호",
+                school: "인천중앙중",
+                games: 5,
+                wins: 4,
+                losses: 1,
+                points: 13,
+                recent: ["승", "승", "패", "승", "승"]
+            },
+            {
+                name: "최승우",
+                school: "부평제일중",
+                games: 5,
+                wins: 3,
+                losses: 2,
+                points: 11,
+                recent: ["승", "패", "승", "승", "패"]
+            }
+            // 여기에 더 많은 선수 데이터를 추가할 수 있습니다
+        ];
+
+        // 경기 결과 데이터
+        const matches = [
+            {
+                date: "2023-06-10",
+                teamA: "인천중앙팀",
+                teamB: "부평레전드",
+                scoreA: 21,
+                scoreB: 15
+            },
+            {
+                date: "2023-06-08",
+                teamA: "계양파이터즈",
+                teamB: "인천중앙팀",
+                scoreA: 18,
+                scoreB: 21
+            },
+            {
+                date: "2023-06-05",
+                teamA: "서구올스타",
+                teamB: "부평레전드",
+                scoreA: 14,
+                scoreB: 21
+            },
+            {
+                date: "2023-06-03",
+                teamA: "인천중앙팀",
+                teamB: "서구올스타",
+                scoreA: 21,
+                scoreB: 12
+            }
+            // 여기에 더 많은 경기 결과를 추가할 수 있습니다
+        ];
+
+        // 페이지 로드 시 데이터 표시
+        window.onload = function() {
+            // 선수 기록 업데이트
+            updatePlayerStats();
+            // 최근 경기 결과 업데이트
+            updateRecentMatches();
+        };
+
+        // 선수 기록 업데이트
+        function updatePlayerStats() {
+            // 승점으로 정렬 (승점이 같을 경우 승률로 정렬)
+            const sortedPlayers = [...players].sort((a, b) => {
+                if (b.points === a.points) {
+                    return (b.wins / b.games) - (a.wins / a.games);
+                }
+                return b.points - a.points;
+            });
+            
+            const tableBody = document.getElementById('player-stats-body');
+            tableBody.innerHTML = '';
+            
+            sortedPlayers.forEach((player, index) => {
+                const row = document.createElement('tr');
+                
+                // 최근 전적 마크 생성
+                const recentResults = player.recent.map(result => {
+                    return `<span class="${result === '승' ? 'win-mark' : 'loss-mark'}">${result}</span>`;
+                }).join('');
+                
+                row.innerHTML = `
+                    <td>${index + 1}</td>
+                    <td>${player.name}</td>
+                    <td>${player.school}</td>
+                    <td>${player.games}</td>
+                    <td class="win">${player.wins}</td>
+                    <td class="loss">${player.losses}</td>
+                    <td class="recent">${recentResults}</td>
+                    <td>${player.points}</td>
+                `;
+                
+                tableBody.appendChild(row);
+            });
+        }
+
+        // 최근 경기 결과 업데이트
+        function updateRecentMatches() {
+            // 최신 경기가 위에 오도록 정렬
+            const sortedMatches = [...matches].sort((a, b) => new Date(b.date) - new Date(a.date));
+            
+            const tableBody = document.getElementById('recent-matches-body');
+            tableBody.innerHTML = '';
+            
+            sortedMatches.forEach(match => {
+                const row = document.createElement('tr');
+                
+                row.innerHTML = `
+                    <td>${match.date}</td>
+                    <td>${match.teamA}</td>
+                    <td>${match.scoreA} : ${match.scoreB}</td>
+                    <td>${match.teamB}</td>
+                `;
+                
+                tableBody.appendChild(row);
+            });
+        }
+    </script>
+</body>
+</html>
