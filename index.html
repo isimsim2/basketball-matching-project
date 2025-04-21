@@ -173,6 +173,25 @@
             border-color: #4CAF50;
         }
         
+        /* 더보기 버튼 스타일 */
+        .load-more-btn {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            margin-top: 15px;
+            background-color: #f1f1f1;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            cursor: pointer;
+            text-align: center;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+        
+        .load-more-btn:hover {
+            background-color: #e0e0e0;
+        }
+        
         /* 필터 종류 선택 스타일 */
         .filter-type {
             display: flex;
@@ -435,6 +454,7 @@
                     </tbody>
                 </table>
             </div>
+            <button id="load-more-players" class="load-more-btn">더보기</button>
         </div>
 
         <!-- 코트별 승패 현황 섹션 -->
@@ -802,6 +822,7 @@
         let playerStats = [];      // 선수별 통계 데이터
         let teamRankings = [];     // 팀별 순위 및 통계
         let formattedMatches = []; // 표시용 경기 결과
+        let playerDisplayCount = 10; // 초기에 표시할 선수 수
 
         // 페이지 로드 시 데이터 표시
         window.onload = function() {
@@ -863,6 +884,17 @@
                         }
                     }
                 });
+            });
+            
+            // 더보기 버튼 이벤트 리스너
+            document.getElementById('load-more-players').addEventListener('click', function() {
+                playerDisplayCount += 10; // 10명씩 추가
+                updatePlayerStats();
+                
+                // 모든 선수를 표시한 경우 버튼 숨기기
+                if (playerDisplayCount >= playerStats.length) {
+                    this.style.display = 'none';
+                }
             });
         };
         
@@ -1193,7 +1225,10 @@
             const tableBody = document.getElementById('player-stats-body');
             tableBody.innerHTML = '';
             
-            sortedPlayers.forEach((player, index) => {
+            // 최대 playerDisplayCount 명까지만 표시
+            const playersToShow = sortedPlayers.slice(0, playerDisplayCount);
+            
+            playersToShow.forEach((player, index) => {
                 const row = document.createElement('tr');
                 
                 // 최근 전적 마크 생성
@@ -1221,6 +1256,14 @@
                 
                 tableBody.appendChild(row);
             });
+            
+            // 더보기 버튼 표시 여부 설정
+            const loadMoreBtn = document.getElementById('load-more-players');
+            if (playerDisplayCount >= sortedPlayers.length) {
+                loadMoreBtn.style.display = 'none';
+            } else {
+                loadMoreBtn.style.display = 'block';
+            }
         }
 
         // 코트별 경기 결과 업데이트
