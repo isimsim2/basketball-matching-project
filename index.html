@@ -422,9 +422,74 @@
             font-size: 12px;
             color: #666;
         }
+        
+        /* 학생 구분 필터 스타일 */
+        .student-filter {
+            margin-bottom: 15px;
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+        }
+        
+        .student-filter-btn {
+            padding: 8px 16px;
+            background-color: #f1f1f1;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: 0.3s;
+            font-weight: bold;
+        }
+        
+        .student-filter-btn:hover {
+            background-color: #ddd;
+        }
+        
+        .student-filter-btn.active {
+            background-color: #4CAF50;
+            color: white;
+            border-color: #4CAF50;
+        }
+        
+        /* 우측 상단 버튼 스타일 */
+        .register-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+        
+        .register-btn:hover {
+            background-color: #45a049;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        
+        @media screen and (max-width: 768px) {
+            .register-btn {
+                top: 10px;
+                right: 10px;
+                padding: 8px 16px;
+                font-size: 14px;
+            }
+        }
     </style>
 </head>
 <body>
+    <!-- 선수풀 등록 버튼 -->
+    <button class="register-btn" onclick="window.open('https://forms.gle/f11xkihmv35Gy6rA8', '_blank')">
+        선수풀 등록하기
+    </button>
+    
     <div class="container">
         <h1>
             <img src="tierballer_logo.png" alt="티어볼러 로고" class="title-logo">
@@ -434,6 +499,14 @@
         <!-- 선수 기록 섹션 -->
         <div class="section">
             <h2>선수 기록</h2>
+            
+            <!-- 학생 구분 필터 -->
+            <div class="student-filter">
+                <button class="student-filter-btn active" data-type="all">전체</button>
+                <button class="student-filter-btn" data-type="middle">중학생</button>
+                <button class="student-filter-btn" data-type="high">고등학생</button>
+            </div>
+            
             <div class="table-container">
                 <table id="player-stats">
                     <thead>
@@ -472,11 +545,11 @@
                 <button class="court-filter-btn active" data-court="인천학생문화회관">인천학생문화회관</button>
                 <button class="court-filter-btn" data-court="율목공원">율목공원</button>
                 <button class="court-filter-btn" data-court="근린공원">근린공원</button>
-                <button class="court-filter-btn" data-court="송도고">송도고</button>
-                <button class="court-filter-btn" data-court="인천고">인천고</button>
-                <button class="court-filter-btn" data-court="부평고">부평고</button>
-                <button class="court-filter-btn" data-court="송현고">송현고</button>
-                <button class="court-filter-btn" data-court="학익고">학익고</button>
+                <button class="court-filter-btn" data-court="송도중고">송도중고</button>
+                <button class="court-filter-btn" data-court="광성중고">광성중고</button>
+                <button class="court-filter-btn" data-court="동산중고">동산중고</button>
+                <button class="court-filter-btn" data-court="재능중고">재능중고</button>
+                <button class="court-filter-btn" data-court="화도진중">화도진중</button>
             </div>
             
             <!-- 팀 필터 -->
@@ -513,139 +586,101 @@
         const players = [
             {
                 id: 1001,
-                name: "김민준",
-                school: "인천고",
-                teams: ["인천매직스"]
+                name: "곽도현",
+                school: "광성중",
+                teams: ["광성", "광성2"]
             },
             {
                 id: 1002,
-                name: "강준호",
-                school: "인천고",
-                teams: ["인천매직스"]
+                name: "노현호",
+                school: "송도중",
+                teams: ["SD앨리웁"]
             },
             {
                 id: 1003,
-                name: "이준호",
-                school: "인천고",
-                teams: ["인천매직스"]
+                name: "조한선",
+                school: "송도중",
+                teams: ["SD앨리웁", "SD앨리웁2"]
             },
             {
                 id: 1004,
-                name: "박지훈",
-                school: "부평고",
-                teams: ["부평레전드"]
+                name: "김다울",
+                school: "광성중",
+                teams: ["광성"]
             },
             {
                 id: 1005,
-                name: "최승우",
-                school: "부평고",
-                teams: ["부평레전드"]
+                name: "현찬율",
+                school: "송도중",
+                teams: ["SD앨리웁"]
             },
             {
                 id: 1006,
-                name: "김도현",
-                school: "부평고",
-                teams: ["부평레전드"]
+                name: "서경현",
+                school: "광성중",
+                teams: ["광성"]
             },
             {
                 id: 1007,
-                name: "이현우",
-                school: "학익고",
-                teams: ["학익스타즈"]
+                name: "임희동",
+                school: "광성중",
+                teams: ["광성", "광성2"]
             },
             {
                 id: 1008,
-                name: "정민성",
-                school: "학익고",
-                teams: ["학익스타즈"]
+                name: "정예준",
+                school: "송도중",
+                teams: ["SD앨리웁"]
             },
             {
                 id: 1009,
-                name: "김준영",
-                school: "학익고",
-                teams: ["학익스타즈"]
+                name: "한재윤",
+                school: "송도중",
+                teams: ["SD앨리웁2"]
             },
             {
                 id: 1010,
-                name: "정도윤",
-                school: "송도고",
-                teams: ["송도불릿츠"]
+                name: "최연호",
+                school: "송도중",
+                teams: ["SD앨리웁2"]
             },
             {
                 id: 1011,
-                name: "이태준",
-                school: "송도고",
-                teams: ["송도불릿츠"]
+                name: "?희현",
+                school: "송도중",
+                teams: ["SD앨리웁2"]
             },
             {
                 id: 1012,
-                name: "김민석",
-                school: "송도고",
-                teams: ["송도불릿츠"]
+                name: "???1",
+                school: "광성중",
+                teams: ["광성2"]
             },
             {
                 id: 1013,
-                name: "박성진",
-                school: "송현고",
-                teams: ["송현호크스"]
+                name: "???2",
+                school: "광성중",
+                teams: ["광성2"]
             },
-            {
-                id: 1014,
-                name: "이동현",
-                school: "송현고",
-                teams: ["송현호크스"]
-            },
-            {
-                id: 1015,
-                name: "최우진",
-                school: "송현고",
-                teams: ["송현호크스"]
-            },
-            {
-                id: 1016,
-                name: "장현우",
-                school: "연수고",
-                teams: ["연수워리어스", "인천매직스"] // 두 팀에 소속된 선수 예시
-            },
-            {
-                id: 1017,
-                name: "유승민",
-                school: "연수고",
-                teams: ["연수워리어스"]
-            },
-            {
-                id: 1018,
-                name: "홍길동",
-                school: "연수고",
-                teams: ["연수워리어스", "송현호크스"] // 두 팀에 소속된 선수 예시
-            }
         ];
 
         // 팀 데이터 - 각 팀의 티어 정보
         const teams = [
             {
-                name: "인천매직스",
-                tier: "platinum" // bronze, silver, gold, platinum, diamond
+                name: "SD앨리웁",
+                tier: "silver" // bronze, silver, gold, platinum, diamond
             },
             {
-                name: "부평레전드",
-                tier: "gold"
-            },
-            {
-                name: "학익스타즈",
+                name: "SD앨리웁2",
                 tier: "silver"
             },
             {
-                name: "송도불릿츠",
+                name: "광성",
                 tier: "bronze"
             },
             {
-                name: "송현호크스",
-                tier: "diamond"
-            },
-            {
-                name: "연수워리어스",
-                tier: "platinum"
+                name: "광성2",
+                tier: "bronze"
             }
         ];
 
@@ -653,168 +688,25 @@
         const matchResults = [
             {
                 id: "M001",
-                date: "2023-06-10",
+                date: "2025-04-23",
                 court: "인천학생문화회관",
-                teamA: "인천매직스",
-                teamAPlayers: [1001, 1002, 1003],
-                teamB: "부평레전드",
-                teamBPlayers: [1004, 1005, 1006],
-                scoreA: 21,
-                scoreB: 15
+                teamA: "SD앨리웁",
+                teamAPlayers: [1002,1003,1005,1008],
+                teamB: "광성",
+                teamBPlayers: [1001,1004,1006,1007],
+                scoreA: 7,
+                scoreB: 2
             },
             {
                 id: "M002",
-                date: "2023-06-08",
-                court: "율목공원",
-                teamA: "학익스타즈",
-                teamAPlayers: [1007, 1008, 1009],
-                teamB: "인천매직스",
-                teamBPlayers: [1001, 1002, 1003],
-                scoreA: 18,
-                scoreB: 21
-            },
-            {
-                id: "M003",
-                date: "2023-06-05",
-                court: "근린공원",
-                teamA: "송도불릿츠",
-                teamAPlayers: [1010, 1011, 1012],
-                teamB: "부평레전드",
-                teamBPlayers: [1004, 1005, 1006],
-                scoreA: 14,
-                scoreB: 21
-            },
-            {
-                id: "M004",
-                date: "2023-06-03",
-                court: "송도고",
-                teamA: "인천매직스",
-                teamAPlayers: [1001, 1002, 1003],
-                teamB: "송도불릿츠",
-                teamBPlayers: [1010, 1011, 1012],
-                scoreA: 21,
-                scoreB: 12
-            },
-            {
-                id: "M005",
-                date: "2023-05-28",
-                court: "인천고",
-                teamA: "부평레전드",
-                teamAPlayers: [1004, 1005, 1006],
-                teamB: "학익스타즈",
-                teamBPlayers: [1007, 1008, 1009],
-                scoreA: 21,
-                scoreB: 19
-            },
-            {
-                id: "M006",
-                date: "2023-05-25",
-                court: "부평고",
-                teamA: "인천매직스",
-                teamAPlayers: [1001, 1002, 1003],
-                teamB: "부평레전드",
-                teamBPlayers: [1004, 1005, 1006],
-                scoreA: 21,
-                scoreB: 17
-            },
-            {
-                id: "M007",
-                date: "2023-05-20",
-                court: "송현고",
-                teamA: "송도불릿츠",
-                teamAPlayers: [1010, 1011, 1012],
-                teamB: "송현호크스",
-                teamBPlayers: [1013, 1014, 1015],
-                scoreA: 16,
-                scoreB: 21
-            },
-            {
-                id: "M008",
-                date: "2023-05-18",
-                court: "학익고",
-                teamA: "부평레전드",
-                teamAPlayers: [1004, 1005, 1006],
-                teamB: "인천매직스",
-                teamBPlayers: [1001, 1002, 1003],
-                scoreA: 17,
-                scoreB: 21
-            },
-            {
-                id: "M009",
-                date: "2023-05-15",
-                court: "연수고",
-                teamA: "연수워리어스",
-                teamAPlayers: [1016, 1017, 1018],
-                teamB: "송현호크스",
-                teamBPlayers: [1013, 1014, 1015],
-                scoreA: 19,
-                scoreB: 21
-            },
-            {
-                id: "M010",
-                date: "2023-05-12",
+                date: "2023-04-30",
                 court: "인천학생문화회관",
-                teamA: "연수워리어스",
-                teamAPlayers: [1016, 1017, 1018],
-                teamB: "인천매직스",
-                teamBPlayers: [1001, 1002, 1003],
-                scoreA: 15,
-                scoreB: 21
-            },
-            {
-                id: "M011",
-                date: "2023-05-08",
-                court: "율목공원",
-                teamA: "송현호크스",
-                teamAPlayers: [1013, 1014, 1015],
-                teamB: "부평레전드",
-                teamBPlayers: [1004, 1005, 1006],
-                scoreA: 21,
-                scoreB: 18
-            },
-            {
-                id: "M012",
-                date: "2023-05-05",
-                court: "근린공원",
-                teamA: "송도불릿츠",
-                teamAPlayers: [1010, 1011, 1012],
-                teamB: "연수워리어스",
-                teamBPlayers: [1016, 1017, 1018],
-                scoreA: 12,
-                scoreB: 21
-            },
-            {
-                id: "M013",
-                date: "2023-05-01",
-                court: "송도고",
-                teamA: "학익스타즈",
-                teamAPlayers: [1007, 1008, 1009],
-                teamB: "송현호크스",
-                teamBPlayers: [1013, 1014, 1015],
-                scoreA: 16,
-                scoreB: 21
-            },
-            {
-                id: "M014",
-                date: "2023-04-28",
-                court: "인천고",
-                teamA: "인천매직스",
-                teamAPlayers: [1001, 1002, 1003],
-                teamB: "학익스타즈",
-                teamBPlayers: [1007, 1008, 1009],
-                scoreA: 21,
-                scoreB: 14
-            },
-            {
-                id: "M015",
-                date: "2023-04-25",
-                court: "부평고",
-                teamA: "부평레전드",
-                teamAPlayers: [1004, 1005, 1006],
-                teamB: "송도불릿츠",
-                teamBPlayers: [1010, 1011, 1012],
-                scoreA: 21,
-                scoreB: 10
+                teamA: "SD앨리웁2",
+                teamAPlayers: [1003,1009,1010,1011],
+                teamB: "광성2",
+                teamBPlayers: [1001,1012,1007,1013],
+                scoreA: 50,
+                scoreB: 8
             }
         ];
         
@@ -824,8 +716,74 @@
         let formattedMatches = []; // 표시용 경기 결과
         let playerDisplayCount = 10; // 초기에 표시할 선수 수
 
+        // 데이터 유효성 검사 함수
+        function validateData() {
+            let errors = [];
+            
+            // 1. 모든 선수 ID가 유효한지 확인
+            matchResults.forEach((match, idx) => {
+                [...match.teamAPlayers, ...match.teamBPlayers].forEach(playerId => {
+                    const player = players.find(p => p.id === playerId);
+                    if (!player) {
+                        errors.push(`경기 ${match.id}: 존재하지 않는 선수 ID ${playerId}`);
+                    }
+                });
+            });
+            
+            // 2. 선수가 해당 팀에 소속되어 있는지 확인
+            matchResults.forEach((match, idx) => {
+                // A팀 선수 확인
+                match.teamAPlayers.forEach(playerId => {
+                    const player = players.find(p => p.id === playerId);
+                    if (player && !player.teams.includes(match.teamA)) {
+                        errors.push(`경기 ${match.id}: 선수 ${player.name}(${playerId})는 팀 ${match.teamA}의 소속이 아닙니다`);
+                    }
+                });
+                
+                // B팀 선수 확인
+                match.teamBPlayers.forEach(playerId => {
+                    const player = players.find(p => p.id === playerId);
+                    if (player && !player.teams.includes(match.teamB)) {
+                        errors.push(`경기 ${match.id}: 선수 ${player.name}(${playerId})는 팀 ${match.teamB}의 소속이 아닙니다`);
+                    }
+                });
+            });
+            
+            // 3. 모든 팀이 teams 배열에 존재하는지 확인
+            const allTeams = new Set(teams.map(t => t.name));
+            matchResults.forEach(match => {
+                if (!allTeams.has(match.teamA)) {
+                    errors.push(`경기 ${match.id}: 존재하지 않는 팀 ${match.teamA}`);
+                }
+                if (!allTeams.has(match.teamB)) {
+                    errors.push(`경기 ${match.id}: 존재하지 않는 팀 ${match.teamB}`);
+                }
+            });
+            
+            // 4. 날짜 형식이 올바른지 확인
+            matchResults.forEach(match => {
+                if (!/^\d{4}-\d{2}-\d{2}$/.test(match.date)) {
+                    errors.push(`경기 ${match.id}: 잘못된 날짜 형식 ${match.date}`);
+                }
+            });
+            
+            // 오류가 있으면 콘솔에 출력하고 경고
+            if (errors.length > 0) {
+                console.error('데이터 유효성 검사 오류:');
+                errors.forEach(error => console.error(error));
+                alert('데이터에 오류가 있습니다. 개발자 도구의 콘솔을 확인해주세요.');
+            }
+            
+            return errors.length === 0;
+        }
+
         // 페이지 로드 시 데이터 표시
         window.onload = function() {
+            // 데이터 유효성 검사 실행
+            if (!validateData()) {
+                return; // 오류가 있으면 처리 중단
+            }
+            
             // 데이터 계산 및 동기화 처리
             processData();
             
@@ -837,18 +795,19 @@
             filterMatchesByCourt('인천학생문화회관');
             updateTopTeamMessage('인천학생문화회관');
             
-            // 코트 필터 이벤트 리스너 등록
-            document.querySelectorAll('.court-filter-btn').forEach(button => {
+            // 학생 구분 필터 이벤트 리스너
+            document.querySelectorAll('.student-filter-btn').forEach(button => {
                 button.addEventListener('click', function() {
-                    const court = this.getAttribute('data-court');
-                    filterMatchesByCourt(court);
-                    updateTopTeamMessage(court);
+                    const type = this.getAttribute('data-type');
                     
                     // 활성화된 버튼 스타일 변경
-                    document.querySelectorAll('.court-filter-btn').forEach(btn => {
+                    document.querySelectorAll('.student-filter-btn').forEach(btn => {
                         btn.classList.remove('active');
                     });
                     this.classList.add('active');
+                    
+                    // 선수 기록 필터링
+                    filterPlayerStats(type);
                 });
             });
             
@@ -883,6 +842,21 @@
                             firstTeamBtn.click();
                         }
                     }
+                });
+            });
+            
+            // 코트 필터 이벤트 리스너 등록
+            document.querySelectorAll('.court-filter-btn').forEach(button => {
+                button.addEventListener('click', function() {
+                    const court = this.getAttribute('data-court');
+                    filterMatchesByCourt(court);
+                    updateTopTeamMessage(court);
+                    
+                    // 활성화된 버튼 스타일 변경
+                    document.querySelectorAll('.court-filter-btn').forEach(btn => {
+                        btn.classList.remove('active');
+                    });
+                    this.classList.add('active');
                 });
             });
             
@@ -1314,6 +1288,73 @@
                 
                 tableBody.appendChild(row);
             });
+        }
+
+        // 선수 기록 필터링 함수
+        function filterPlayerStats(type) {
+            // 승률로 정렬 (승률이 같을 경우 경기수가 많은 순)
+            let filteredPlayers = [...playerStats];
+            
+            if (type !== 'all') {
+                filteredPlayers = playerStats.filter(player => {
+                    const schoolName = player.school;
+                    const lastChar = schoolName.charAt(schoolName.length - 1);
+                    return type === 'middle' ? lastChar === '중' : lastChar === '고';
+                });
+            }
+            
+            filteredPlayers.sort((a, b) => {
+                const winRateA = a.wins / a.games || 0;
+                const winRateB = b.wins / b.games || 0;
+                
+                if (winRateB === winRateA) {
+                    return b.games - a.games;
+                }
+                return winRateB - winRateA;
+            });
+            
+            const tableBody = document.getElementById('player-stats-body');
+            tableBody.innerHTML = '';
+            
+            // 최대 playerDisplayCount 명까지만 표시
+            const playersToShow = filteredPlayers.slice(0, playerDisplayCount);
+            
+            playersToShow.forEach((player, index) => {
+                const row = document.createElement('tr');
+                
+                // 최근 전적 마크 생성
+                const recentResults = player.recent.map(result => {
+                    return `<span class="${result === '승' ? 'win-mark' : 'loss-mark'}">${result}</span>`;
+                }).join('');
+                
+                // 티어 배지 생성
+                const tierBadge = `<span class="tier tier-${player.highestTier}">${getTierText(player.highestTier)}</span>`;
+                
+                // 소속팀 표시 - 쉼표로 구분
+                const teamsDisplay = player.teams.join(', ');
+                
+                row.innerHTML = `
+                    <td>${index + 1}</td>
+                    <td>${player.name}</td>
+                    <td>${player.school}</td>
+                    <td>${teamsDisplay}</td>
+                    <td>${player.games}</td>
+                    <td class="win">${player.wins}</td>
+                    <td class="loss">${player.losses}</td>
+                    <td class="recent">${recentResults}</td>
+                    <td>${tierBadge}</td>
+                `;
+                
+                tableBody.appendChild(row);
+            });
+            
+            // 더보기 버튼 표시 여부 설정
+            const loadMoreBtn = document.getElementById('load-more-players');
+            if (playerDisplayCount >= filteredPlayers.length) {
+                loadMoreBtn.style.display = 'none';
+            } else {
+                loadMoreBtn.style.display = 'block';
+            }
         }
     </script>
 </body>
