@@ -3,125 +3,112 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>티어볼러 - 인천 중,고등학생 농구 매칭</title>
+    <title>티어볼러</title>
     <style>
-        body {
-            font-family: 'Noto Sans KR', sans-serif;
-            margin: 0;
-            padding: 10px;
-            background-color: #f5f5f5;
-        }
-        .container {
-            max-width: 1000px;
-            margin: 0 auto;
-            background-color: white;
-            padding: 15px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-        }
-        h1 {
-            text-align: center;
-            color: #333;
-            margin-bottom: 20px;
+        body { font-family: 'Noto Sans KR', Arial, sans-serif; background: #f7f7f7; margin: 0; padding: 0; }
+        .container { max-width: 1000px; margin: 24px auto; background: #fff; padding: 24px 10px 32px 10px; border-radius: 12px; box-shadow: 0 2px 12px rgba(76,175,80,0.08); }
+        .logo-header {
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 15px;
+            gap: 22px;
+            margin-bottom: 24px;
             flex-wrap: wrap;
         }
-        .title-logo {
-            height: 50px;
-            vertical-align: middle;
+        .logo-banner {
+            height: 54px;
+            width: auto;
+            display: block;
         }
-        .section {
-            margin-bottom: 30px;
+        .logo-title {
+            font-size: 2.1rem;
+            font-weight: 800;
+            color: #222;
+            letter-spacing: -1px;
+            line-height: 1;
+            text-align: center;
         }
-        h2 {
-            margin-bottom: 15px;
-            color: #444;
-            border-bottom: 2px solid #e0e0e0;
-            padding-bottom: 5px;
+        .filter-bar { 
+            display: flex;
+            gap: 8px; 
+            margin-bottom: 18px; 
+            align-items: center;
+            flex-wrap: wrap;
+            justify-content: center;
         }
+        .filter-dropdown-wrap { position: relative; }
+        .filter-btn {
+            border: 2px solid #e0e0e0;
+            background: #f6f6f6;
+            color: #222;
+            border-radius: 5px;
+            font-weight: bold;
+            font-size: 0.93rem;
+            padding: 4px 28px 4px 14px;
+            cursor: pointer;
+            transition: background 0.2s, color 0.2s;
+            position: relative;
+        }
+        .filter-btn::after {
+            content: '▼';
+            font-size: 0.8em;
+            color: #222;
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            pointer-events: none;
+        }
+        .filter-btn:not(.active) {
+            background: #fff;
+            color: #888;
+            border-color: #bbb;
+        }
+        .filter-btn:not(.active):hover, .filter-btn:not(.active):focus {
+            background: #f6f6f6;
+            border-color: #bbb;
+            color: #222;
+        }
+        .filter-dropdown {
+            display: none;
+            position: absolute;
+            background: #fff;
+            border: 1.5px solid #b2dfdb;
+            border-radius: 6px;
+            margin-top: 4px;
+            min-width: 110px;
+            z-index: 100;
+            box-shadow: 0 2px 8px rgba(76,175,80,0.08);
+        }
+        .filter-dropdown.show { display: block; }
+        .filter-dropdown button {
+            border: none; background: #fff; color: #222; padding: 7px 12px; width: 100%; text-align: left; cursor: pointer; font-size: 0.93rem;
+        }
+        .filter-dropdown button:hover { background: #f6f6f6; }
         table {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 10px;
+            margin: 0 0 18px 0; 
+            background: #fff;
+            table-layout: fixed;
         }
         th, td {
-            border: 1px solid #ddd;
-            padding: 8px;
+            border: 1px solid #e0e0e0; 
+            padding: 8px 3px; 
             text-align: center;
+            font-size: 0.98rem;
+            word-break: break-word;
         }
         th {
-            background-color: #f2f2f2;
+            background: #f6f6f6; 
             font-weight: bold;
+            color: #222;
+            position: sticky;
+            top: 0;
         }
-        tr:nth-child(even) {
-            background-color: #f9f9f9;
-        }
-        tr:hover {
-            background-color: #f0f0f0;
-        }
-        .win {
-            color: blue;
-        }
-        .loss {
-            color: red;
-        }
-        .win-team {
-            background-color: rgba(0, 0, 255, 0.1);
-        }
-        .loss-team {
-            background-color: rgba(255, 0, 0, 0.1);
-        }
-        .recent {
-            display: flex;
-            justify-content: center;
-            gap: 3px;
-            flex-wrap: wrap;
-        }
-        .recent span {
-            display: inline-block;
-            width: 20px;
-            height: 20px;
-            line-height: 20px;
-            text-align: center;
-            border-radius: 50%;
-            font-size: 12px;
-        }
-        .recent .win-mark {
-            background-color: #c8e6c9;
-        }
-        .recent .loss-mark {
-            background-color: #ffcdd2;
-        }
-        
-        /* 1등 팀 메시지 스타일 */
-        .top-team-message {
-            background-color: #f8f9fa;
-            padding: 10px 15px;
-            margin-bottom: 15px;
-            border-radius: 5px;
-            border-left: 5px solid #4CAF50;
-            font-weight: bold;
-            font-size: 16px;
-            color: #333;
-            text-align: center;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 5px;
-        }
-        
-        /* 강조 메시지 스타일 */
-        .highlight-text {
-            color: #FF0000;
-            font-size: 120%;
-            font-weight: bold;
-        }
-        
-        /* 티어 관련 스타일 */
-        .tier {
+        .win-bg { background: #e3f0ff !important; }
+        .lose-bg { background: #ffe3e3 !important; }
+        .tier-badge { 
             display: inline-block;
             padding: 3px 6px;
             border-radius: 4px;
@@ -130,1232 +117,504 @@
             color: #fff;
             text-shadow: 0 1px 2px rgba(0,0,0,0.3);
         }
-        .tier-bronze {
-            background: linear-gradient(to bottom, #cd7f32, #a05a2c);
-        }
-        .tier-silver {
-            background: linear-gradient(to bottom, #c0c0c0, #a8a8a8);
-        }
-        .tier-gold {
-            background: linear-gradient(to bottom, #ffd700, #cca800);
-        }
-        .tier-platinum {
-            background: linear-gradient(to bottom, #e5e4e2, #a9a9a9);
-        }
-        .tier-diamond {
+        .tier-badge.다이아 { 
             background: linear-gradient(to bottom, #b9f2ff, #56c1d7);
         }
-        
-        /* 코트 필터 스타일 */
-        .court-filter {
-            margin-bottom: 10px;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 5px;
+        .tier-badge.플래티넘 { 
+            background: linear-gradient(to bottom, #e5e4e2, #a9a9a9);
         }
-        
-        .court-filter button {
-            padding: 6px 12px;
-            background-color: #f1f1f1;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: 0.3s;
+        .tier-badge.골드 { 
+            background: linear-gradient(to bottom, #ffd700, #cca800);
         }
-        
-        .court-filter button:hover {
-            background-color: #ddd;
+        .tier-badge.실버 { 
+            background: linear-gradient(to bottom, #c0c0c0, #a8a8a8);
         }
-        
-        .court-filter button.active {
-            background-color: #4CAF50;
-            color: white;
-            border-color: #4CAF50;
+        .tier-badge.브론즈 { 
+            background: linear-gradient(to bottom, #cd7f32, #a05a2c);
         }
-        
-        /* 더보기 버튼 스타일 */
-        .load-more-btn {
-            display: block;
-            width: 100%;
-            padding: 10px;
-            margin-top: 15px;
-            background-color: #f1f1f1;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            cursor: pointer;
-            text-align: center;
-            font-weight: bold;
-            transition: 0.3s;
-        }
-        
-        .load-more-btn:hover {
-            background-color: #e0e0e0;
-        }
-        
-        /* 필터 종류 선택 스타일 */
-        .filter-type {
-            display: flex;
-            margin-bottom: 10px;
-            border-bottom: 1px solid #ddd;
-        }
-        
-        .filter-type-btn {
-            padding: 8px 15px;
-            background-color: transparent;
-            border: none;
-            border-bottom: 3px solid transparent;
-            cursor: pointer;
-            font-weight: bold;
-            transition: 0.3s;
-        }
-        
-        .filter-type-btn:hover {
-            background-color: #f0f0f0;
-        }
-        
-        .filter-type-btn.active {
-            border-bottom: 3px solid #4CAF50;
-            color: #4CAF50;
-        }
-        
-        /* 코트 필터와 팀 필터 공통 스타일 */
-        .filter-group {
-            display: none;
-            margin-bottom: 10px;
-            flex-wrap: wrap;
-            gap: 5px;
-        }
-        
-        .filter-group.active {
-            display: flex;
-        }
-        
-        .court-filter-btn, .team-filter-btn {
-            padding: 6px 12px;
-            background-color: #f1f1f1;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: 0.3s;
-        }
-        
-        .court-filter-btn:hover, .team-filter-btn:hover {
-            background-color: #ddd;
-        }
-        
-        .court-filter-btn.active, .team-filter-btn.active {
-            background-color: #4CAF50;
-            color: white;
-            border-color: #4CAF50;
-        }
-        
-        /* 반응형 디자인을 위한 미디어 쿼리 */
-        @media screen and (max-width: 768px) {
-            .container {
-                padding: 10px;
-            }
-            
-            h1 {
-                font-size: 20px;
-                flex-direction: column;
-                gap: 10px;
-            }
-            
-            .title-logo {
-                height: 40px;
-            }
-            
-            .court-filter {
-                justify-content: center;
-            }
-            
-            .court-filter button {
-                padding: 4px 8px;
-                font-size: 12px;
-            }
-            
-            th, td {
-                padding: 6px 4px;
-                font-size: 14px;
-            }
-            
-            .recent span {
-                width: 16px;
-                height: 16px;
-                line-height: 16px;
-                font-size: 10px;
-            }
-            
-            .top-team-message {
-                font-size: 14px;
-                padding: 8px 10px;
-            }
-            
-            .highlight-text {
-                font-size: 110%;
-            }
-            
-            /* 테이블 스크롤 처리 */
-            .table-container {
-                width: 100%;
-                overflow-x: auto;
-            }
-            
-            .filter-type-btn {
-                padding: 6px 10px;
-                font-size: 14px;
-            }
-            
-            .court-filter-btn, .team-filter-btn {
-                padding: 4px 8px;
-                font-size: 12px;
-            }
-        }
-        
-        @media screen and (max-width: 480px) {
-            body {
-                padding: 5px;
-            }
-            
-            h1 {
-                font-size: 18px;
-            }
-            
-            .title-logo {
-                height: 30px;
-            }
-            
-            h2 {
-                font-size: 16px;
-            }
-            
-            .court-filter button {
-                padding: 3px 6px;
-                font-size: 11px;
-            }
-            
-            th, td {
-                padding: 4px 2px;
-                font-size: 12px;
-            }
-            
-            .recent span {
-                width: 14px;
-                height: 14px;
-                line-height: 14px;
-                font-size: 8px;
-            }
-            
-            .top-team-message {
-                font-size: 12px;
-                padding: 6px 8px;
-            }
-            
-            .highlight-text {
-                font-size: 105%;
-            }
-            
-            .filter-type-btn {
-                padding: 5px 8px;
-                font-size: 12px;
-            }
-            
-            .court-filter-btn, .team-filter-btn {
-                padding: 3px 6px;
-                font-size: 11px;
-            }
-        }
-        
-        .small-tier {
-            font-size: 10px;
-            padding: 2px 4px;
-            vertical-align: middle;
-        }
-        
-        .team-rank {
-            display: inline-block;
-            background-color: #4CAF50;
-            color: white;
-            font-weight: bold;
-            padding: 2px 6px;
-            border-radius: 12px;
-            margin-right: 6px;
-            font-size: 14px;
-        }
-        
-        /* 팀 정보 카드 스타일 */
-        .team-info-card {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            width: 100%;
-        }
-        
-        .team-info-header {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 8px;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-        
-        .team-info-stats {
-            display: flex;
-            gap: 15px;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-        
-        .team-stat-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-        
-        .team-stat-value {
-            font-size: 18px;
-            font-weight: bold;
-        }
-        
-        .team-stat-label {
-            font-size: 12px;
-            color: #666;
-        }
-        
-        /* 학생 구분 필터 스타일 */
-        .student-filter {
-            margin-bottom: 15px;
-            display: flex;
-            gap: 10px;
-            justify-content: center;
-        }
-        
-        .student-filter-btn {
-            padding: 8px 16px;
-            background-color: #f1f1f1;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: 0.3s;
-            font-weight: bold;
-        }
-        
-        .student-filter-btn:hover {
-            background-color: #ddd;
-        }
-        
-        .student-filter-btn.active {
-            background-color: #4CAF50;
-            color: white;
-            border-color: #4CAF50;
-        }
-        
-        /* 우측 상단 버튼 스타일 */
         .register-btn {
             position: fixed;
-            top: 20px;
-            right: 20px;
-            padding: 10px 20px;
-            background-color: #4CAF50;
-            color: white;
+            bottom: 24px;
+            right: 24px;
+            z-index: 1100;
+            background: #4CAF50;
+            color: #fff;
             border: none;
-            border-radius: 5px;
-            cursor: pointer;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            font-size: 0.98rem;
             font-weight: bold;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-            transition: all 0.3s ease;
-            z-index: 1000;
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(76,175,80,0.10);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 0;
         }
-        
-        .register-btn:hover {
-            background-color: #45a049;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        .register-btn:hover { 
+            background: #388e3c;
+            transform: scale(1.05);
+            transition: transform 0.2s;
         }
-        
-        @media screen and (max-width: 768px) {
+        .team-name-hover {
+            position: relative;
+            cursor: pointer;
+            text-decoration: underline dotted #aaa;
+        }
+        .team-card-tooltip {
+            display: none;
+            position: absolute;
+            left: 50%;
+            top: 110%;
+            transform: translateX(-50%);
+            z-index: 100;
+            background: #fff;
+            border: 2px solid #4CAF50;
+            border-radius: 10px;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.13);
+            padding: 6px;
+            width: 200px;
+            height: 280px;
+            align-items: center;
+            justify-content: center;
+        }
+        .team-name-hover:hover .team-card-tooltip {
+            display: flex;
+        }
+        .team-card-tooltip img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            border-radius: 8px;
+        }
+        .match-section {
+            margin-bottom: 32px;
+        }
+        .match-section h2 {
+            font-size: 1.08rem;
+            margin: 28px 0 12px 0;
+            font-weight: 700;
+            padding-left: 8px;
+            border-left: 4px solid #4CAF50;
+        }
+        @media (max-width: 768px) {
+            .container {
+                margin: 12px;
+                padding: 16px 8px;
+            }
+            .logo-header {
+                gap: 12px;
+                margin-bottom: 16px;
+            }
+            .logo-banner {
+                height: 40px;
+            }
+            .logo-title {
+                font-size: 1.5rem;
+            }
+            .filter-bar {
+                gap: 4px;
+            }
+            .filter-btn {
+                font-size: 0.85rem;
+                padding: 4px 24px 4px 10px;
+            }
+            th, td {
+                font-size: 0.85rem;
+                padding: 6px 2px;
+            }
             .register-btn {
-                top: 10px;
-                right: 10px;
-                padding: 8px 16px;
-                font-size: 14px;
+                width: 50px;
+                height: 50px;
+                font-size: 0.85rem;
+                bottom: 16px;
+                right: 16px;
+            }
+            .tier-badge {
+                font-size: 10px;
+                padding: 1px 6px;
+            }
+        }
+        @media (max-width: 480px) {
+            .container {
+                margin: 8px;
+                padding: 12px 6px;
+            }
+            .logo-title {
+                font-size: 1.2rem;
+            }
+            .filter-btn {
+                font-size: 0.8rem;
+                padding: 3px 20px 3px 8px;
+            }
+            th, td {
+                font-size: 0.8rem;
+                padding: 4px 1px;
+            }
+            .register-btn {
+                width: 45px;
+                height: 45px;
+                font-size: 0.8rem;
+                bottom: 12px;
+                right: 12px;
             }
         }
     </style>
 </head>
 <body>
-    <!-- 선수풀 등록 버튼 -->
-    <button class="register-btn" onclick="window.open('https://forms.gle/f11xkihmv35Gy6rA8', '_blank')">
-        선수풀 등록하기
-    </button>
-    
     <div class="container">
-        <h1>
-            <img src="tierballer_logo.png" alt="티어볼러 로고" class="title-logo">
-            티어볼러 - 인천 중,고등학생 농구 매칭
-        </h1>
-
-        <!-- 선수 기록 섹션 -->
-        <div class="section">
-            <h2>선수 기록</h2>
-            
-            <!-- 학생 구분 필터 -->
-            <div class="student-filter">
-                <button class="student-filter-btn active" data-type="all">전체</button>
-                <button class="student-filter-btn" data-type="middle">중학생</button>
-                <button class="student-filter-btn" data-type="high">고등학생</button>
-            </div>
-            
-            <div class="table-container">
-                <table id="player-stats">
-                    <thead>
-                        <tr>
-                            <th>순위</th>
-                            <th>선수명</th>
-                            <th>학교</th>
-                            <th>소속팀</th>
-                            <th>경기수</th>
-                            <th>승</th>
-                            <th>패</th>
-                            <th>최근전적</th>
-                            <th>소속팀 티어</th>
-                        </tr>
-                    </thead>
-                    <tbody id="player-stats-body">
-                        <!-- 데이터는 JavaScript로 기입됨 -->
-                    </tbody>
-                </table>
-            </div>
-            <button id="load-more-players" class="load-more-btn">더보기</button>
+        <div class="logo-header">
+            <img src="tierballer_logo.png" alt="티어볼러 로고" class="logo-banner">
+            <span class="logo-title">중고등학생 농구 실력 성장 플랫폼 - 티어볼러</span>
         </div>
 
-        <!-- 코트별 승패 현황 섹션 -->
-        <div class="section">
-            <h2>승패 현황</h2>
-            
-            <!-- 필터 종류 선택 -->
-            <div class="filter-type">
-                <button class="filter-type-btn active" data-filter="court">코트별 필터</button>
-                <button class="filter-type-btn" data-filter="team">팀별 필터</button>
+        <!-- 필터 영역 -->
+        <div class="filter-bar">
+            <div class="filter-dropdown-wrap">
+                <button class="filter-btn" id="seasonBtn">전체 시즌</button>
+                <div class="filter-dropdown" id="seasonDropdown">
+                    <button data-value="">전체 시즌</button>
+                    <button data-value="1학기 1시즌">1학기 1시즌</button>
+                    <button data-value="1학기 2시즌">1학기 2시즌</button>
+                    <button data-value="여름방학 시즌">여름방학 시즌</button>
+                    <button data-value="2학기 1시즌">2학기 1시즌</button>
+                    <button data-value="2학기 2시즌">2학기 2시즌</button>
+                    <button data-value="겨울방학 시즌">겨울방학 시즌</button>
+                </div>
             </div>
-            
-            <!-- 코트 필터 -->
-            <div class="court-filter filter-group active">
-                <button class="court-filter-btn active" data-court="인천학생문화회관">인천학생문화회관</button>
-                <button class="court-filter-btn" data-court="율목공원">율목공원</button>
-                <button class="court-filter-btn" data-court="근린공원">근린공원</button>
-                <button class="court-filter-btn" data-court="송도중고">송도중고</button>
-                <button class="court-filter-btn" data-court="광성중고">광성중고</button>
-                <button class="court-filter-btn" data-court="동산중고">동산중고</button>
-                <button class="court-filter-btn" data-court="재능중고">재능중고</button>
-                <button class="court-filter-btn" data-court="화도진중">화도진중</button>
+            <div class="filter-dropdown-wrap">
+                <button class="filter-btn" id="regionBtn">전체 지역</button>
+                <div class="filter-dropdown" id="regionDropdown">
+                    <button data-value="">전체 지역</button>
+                    <button data-value="인천">인천</button>
+                    <button data-value="성남">성남</button>
+                </div>
             </div>
-            
-            <!-- 팀 필터 -->
-            <div class="team-filter filter-group">
-                <!-- 팀 버튼은 자바스크립트로 동적 추가됨 -->
+            <div class="filter-dropdown-wrap">
+                <button class="filter-btn" id="tierBtn">전체 티어</button>
+                <div class="filter-dropdown" id="tierDropdown">
+                    <button data-value="">전체 티어</button>
+                    <button data-value="다이아">다이아</button>
+                    <button data-value="플래티넘">플래티넘</button>
+                    <button data-value="골드">골드</button>
+                    <button data-value="실버">실버</button>
+                    <button data-value="브론즈">브론즈</button>
+                </div>
             </div>
-            
-            <!-- 1등 팀 안내 문구 -->
-            <div id="top-team-message" class="top-team-message">
-                <!-- 자바스크립트로 내용 업데이트 -->
+            <div class="filter-dropdown-wrap">
+                <button class="filter-btn" id="schoolLevelBtn">전체 학교구분</button>
+                <div class="filter-dropdown" id="schoolLevelDropdown">
+                    <button data-value="">전체 학교구분</button>
+                    <button data-value="중학교">중학교</button>
+                    <button data-value="고등학교">고등학교</button>
+                </div>
             </div>
-            
-            <div class="table-container">
-                <table id="court-matches">
-                    <thead>
-                        <tr>
-                            <th>날짜</th>
-                            <th>경기 코트</th>
-                            <th>A팀</th>
-                            <th>점수</th>
-                            <th>B팀</th>
-                        </tr>
-                    </thead>
-                    <tbody id="court-matches-body">
-                        <!-- 데이터는 JavaScript로 기입됨 -->
-                    </tbody>
-                </table>
+            <div class="filter-dropdown-wrap">
+                <button class="filter-btn" id="schoolBtn">전체 소속학교</button>
+                <div class="filter-dropdown" id="schoolDropdown">
+                    <button data-value="">전체 소속학교</button>
+                    <button data-value="송도중학교">송도중학교</button>
+                    <button data-value="광성중학교">광성중학교</button>
+                    <button data-value="광성고등학교">광성고등학교</button>
+                    <button data-value="동산중학교">동산중학교</button>
+                    <button data-value="동산고등학교">동산고등학교</button>
+                    <button data-value="재능중학교">재능중학교</button>
+                    <button data-value="재능고등학교">재능고등학교</button>
+                    <button data-value="화도진중학교">화도진중학교</button>
+                    <button data-value="도촌중학교">도촌중학교</button>
+                    <button data-value="야탑고등학교">야탑고등학교</button>
+                    <button data-value="태원고등학교">태원고등학교</button>
+                </div>
             </div>
+            <div class="filter-dropdown-wrap">
+                <button class="filter-btn" id="courtBtn">전체 코트</button>
+                <div class="filter-dropdown" id="courtDropdown">
+                    <button data-value="">전체 코트</button>
+                    <button data-value="인천학생문화회관">인천학생문화회관</button>
+                    <button data-value="율목공원">율목공원</button>
+                    <button data-value="근린공원">근린공원</button>
+                    <button data-value="송도중">송도중</button>
+                    <button data-value="광성중고">광성중고</button>
+                    <button data-value="동산중고">동산중고</button>
+                    <button data-value="재능중고">재능중고</button>
+                    <button data-value="화도진중">화도진중</button>
+                    <button data-value="섬말공원">섬말공원</button>
+                    <button data-value="청소년수련관">청소년수련관</button>
+                    <button data-value="성남종합운동장">성남종합운동장</button>
+                </div>
+            </div>
+        </div>
+            
+        <!-- 랭킹전 섹션 -->
+        <div class="match-section">
+            <h2>랭킹전</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 10%">날짜</th>
+                        <th style="width: 12%">경기 코트</th>
+                        <th style="width: 29%">팀 A</th>
+                        <th style="width: 10%">점수</th>
+                        <th style="width: 29%">팀 B</th>
+                        <th style="width: 10%">시즌</th>
+                    </tr>
+                </thead>
+                <tbody id="rankingMatches"></tbody>
+            </table>
+        </div>
+            
+        <!-- 일반전 섹션 -->
+        <div class="match-section">
+            <h2>일반전</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 10%">날짜</th>
+                        <th style="width: 12%">경기 코트</th>
+                        <th style="width: 29%">팀 A</th>
+                        <th style="width: 10%">점수</th>
+                        <th style="width: 29%">팀 B</th>
+                        <th style="width: 10%">시즌</th>
+                    </tr>
+                </thead>
+                <tbody id="generalMatches"></tbody>
+            </table>
         </div>
     </div>
-
+    <button class="register-btn" onclick="window.open('https://docs.google.com/forms/d/e/1FAIpQLSfzBQ0-EJqGz_NQ45KASLq8Pt4v6PkkNojuFPV_MMJOIeCcwA/viewform?usp=dialog', '_blank')">경기하기</button>
     <script>
-        // 선수 데이터 - 나중에 이 부분만 수정하면 모든 정보가 자동으로 동기화됩니다
+        // 선수 데이터
         const players = [
-            {
-                id: 1001,
-                name: "곽도현",
-                school: "광성중",
-                teams: ["광성", "광성2"]
-            },
-            {
-                id: 1002,
-                name: "노현호",
-                school: "송도중",
-                teams: ["SD앨리웁"]
-            },
-            {
-                id: 1003,
-                name: "조한선",
-                school: "송도중",
-                teams: ["SD앨리웁", "SD앨리웁2"]
-            },
-            {
-                id: 1004,
-                name: "김다울",
-                school: "광성중",
-                teams: ["광성"]
-            },
-            {
-                id: 1005,
-                name: "현찬율",
-                school: "송도중",
-                teams: ["SD앨리웁"]
-            },
-            {
-                id: 1006,
-                name: "서경현",
-                school: "광성중",
-                teams: ["광성"]
-            },
-            {
-                id: 1007,
-                name: "임희동",
-                school: "광성중",
-                teams: ["광성", "광성2"]
-            },
-            {
-                id: 1008,
-                name: "정예준",
-                school: "송도중",
-                teams: ["SD앨리웁"]
-            },
-            {
-                id: 1009,
-                name: "한재윤",
-                school: "송도중",
-                teams: ["SD앨리웁2"]
-            },
-            {
-                id: 1010,
-                name: "최연호",
-                school: "송도중",
-                teams: ["SD앨리웁2"]
-            },
-            {
-                id: 1011,
-                name: "?희현",
-                school: "송도중",
-                teams: ["SD앨리웁2"]
-            },
-            {
-                id: 1012,
-                name: "???1",
-                school: "광성중",
-                teams: ["광성2"]
-            },
-            {
-                id: 1013,
-                name: "???2",
-                school: "광성중",
-                teams: ["광성2"]
-            },
+            { id: 1, name: "노현호", school: "송도중학교", team_id: 1 },
+            { id: 2, name: "조한선", school: "송도중학교", team_id: 1 },
+            { id: 3, name: "현찬율", school: "송도중학교", team_id: 1 },
+            { id: 4, name: "정예준", school: "송도중학교", team_id: 1 },
+            { id: 5, name: "한재윤", school: "송도중학교", team_id: 1 },
+            { id: 6, name: "최연호", school: "송도중학교", team_id: 1 },
+            { id: 7, name: "희현", school: "송도중학교", team_id: 1 },
+            { id: 8, name: "곽도현", school: "광성중학교", team_id: 2 },
+            { id: 9, name: "김다울", school: "광성중학교", team_id: 2 },
+            { id: 10, name: "서경현", school: "광성중학교", team_id: 2 },
+            { id: 11, name: "임희동", school: "광성중학교", team_id: 2 }
         ];
 
-        // 팀 데이터 - 각 팀의 티어 정보
+        // 팀 데이터
         const teams = [
-            {
-                name: "SD앨리웁",
-                tier: "silver" // bronze, silver, gold, platinum, diamond
+            { 
+                id: 1, 
+                name: "SD앨리웁", 
+                tier: "실버", 
+                school: "송도중학교", 
+                schoolLevel: "중학교",
+                region: "인천" 
             },
-            {
-                name: "SD앨리웁2",
-                tier: "silver"
-            },
-            {
-                name: "광성",
-                tier: "bronze"
-            },
-            {
-                name: "광성2",
-                tier: "bronze"
+            { 
+                id: 2, 
+                name: "광성", 
+                tier: "브론즈", 
+                school: "광성중학교", 
+                schoolLevel: "중학교",
+                region: "인천" 
             }
         ];
 
-        // 경기 결과 데이터 - 이 부분만 수정하면 모든 정보가 자동으로 업데이트됩니다
-        const matchResults = [
+        // 랭킹전 데이터
+        const rankingMatches = [
             {
-                id: "M001",
+                id: 101,
                 date: "2025-04-23",
                 court: "인천학생문화회관",
-                teamA: "SD앨리웁",
-                teamAPlayers: [1002,1003,1005,1008],
-                teamB: "광성",
-                teamBPlayers: [1001,1004,1006,1007],
+                teamA_id: 1,
+                teamB_id: 2,
                 scoreA: 7,
-                scoreB: 2
+                scoreB: 2,
+                season: "1학기 1시즌",
+                region: "인천",
+                participants: {
+                    teamA: [1, 2, 4], // 노현호, 조한선, 정예준
+                    teamB: [8, 9, 11] // 곽도현, 김다울, 임희동
+                }
             },
             {
-                id: "M002",
-                date: "2023-04-30",
+                id: 102,
+                date: "2025-04-30",
                 court: "인천학생문화회관",
-                teamA: "SD앨리웁2",
-                teamAPlayers: [1003,1009,1010,1011],
-                teamB: "광성2",
-                teamBPlayers: [1001,1012,1007,1013],
-                scoreA: 50,
-                scoreB: 8
+                teamA_id: 1,
+                teamB_id: 2,
+                scoreA: 24,
+                scoreB: 8,
+                season: "1학기 1시즌",
+                region: "인천",
+                participants: {
+                    teamA: [2, 5, 7], // 조한선, 한재윤, 희현
+                    teamB: [8, 10, 11] // 곽도현, 서경현, 임희동
+                }
             }
         ];
-        
-        // 계산된 데이터를 저장할 변수들
-        let playerStats = [];      // 선수별 통계 데이터
-        let teamRankings = [];     // 팀별 순위 및 통계
-        let formattedMatches = []; // 표시용 경기 결과
-        let playerDisplayCount = 10; // 초기에 표시할 선수 수
 
-        // 데이터 유효성 검사 함수
-        function validateData() {
-            let errors = [];
-            
-            // 1. 모든 선수 ID가 유효한지 확인
-            matchResults.forEach((match, idx) => {
-                [...match.teamAPlayers, ...match.teamBPlayers].forEach(playerId => {
-                    const player = players.find(p => p.id === playerId);
-                    if (!player) {
-                        errors.push(`경기 ${match.id}: 존재하지 않는 선수 ID ${playerId}`);
-                    }
-                });
-            });
-            
-            // 2. 선수가 해당 팀에 소속되어 있는지 확인
-            matchResults.forEach((match, idx) => {
-                // A팀 선수 확인
-                match.teamAPlayers.forEach(playerId => {
-                    const player = players.find(p => p.id === playerId);
-                    if (player && !player.teams.includes(match.teamA)) {
-                        errors.push(`경기 ${match.id}: 선수 ${player.name}(${playerId})는 팀 ${match.teamA}의 소속이 아닙니다`);
-                    }
-                });
-                
-                // B팀 선수 확인
-                match.teamBPlayers.forEach(playerId => {
-                    const player = players.find(p => p.id === playerId);
-                    if (player && !player.teams.includes(match.teamB)) {
-                        errors.push(`경기 ${match.id}: 선수 ${player.name}(${playerId})는 팀 ${match.teamB}의 소속이 아닙니다`);
-                    }
-                });
-            });
-            
-            // 3. 모든 팀이 teams 배열에 존재하는지 확인
-            const allTeams = new Set(teams.map(t => t.name));
-            matchResults.forEach(match => {
-                if (!allTeams.has(match.teamA)) {
-                    errors.push(`경기 ${match.id}: 존재하지 않는 팀 ${match.teamA}`);
+        // 일반전 데이터
+        const generalMatches = [
+            {
+                id: 201,
+                date: "2025-04-23",
+                court: "인천학생문화회관",
+                teamA_id: 1,
+                teamB_id: 2,
+                scoreA: 50,
+                scoreB: 8,
+                season: "1학기 1시즌",
+                region: "인천",
+                participants: {
+                    teamA: [2, 5, 6, 7], // 조한선, 한재윤, 최연호, 희현
+                    teamB: [8, 9, 10, 11] // 곽도현, 김다울, 서경현, 임희동
                 }
-                if (!allTeams.has(match.teamB)) {
-                    errors.push(`경기 ${match.id}: 존재하지 않는 팀 ${match.teamB}`);
-                }
-            });
-            
-            // 4. 날짜 형식이 올바른지 확인
-            matchResults.forEach(match => {
-                if (!/^\d{4}-\d{2}-\d{2}$/.test(match.date)) {
-                    errors.push(`경기 ${match.id}: 잘못된 날짜 형식 ${match.date}`);
-                }
-            });
-            
-            // 오류가 있으면 콘솔에 출력하고 경고
-            if (errors.length > 0) {
-                console.error('데이터 유효성 검사 오류:');
-                errors.forEach(error => console.error(error));
-                alert('데이터에 오류가 있습니다. 개발자 도구의 콘솔을 확인해주세요.');
             }
-            
-            return errors.length === 0;
+        ];
+
+        // 필터 상태
+        const filterState = { season: '', region: '', tier: '', schoolLevel: '', school: '', court: '' };
+
+        // 드롭다운 토글 및 선택 이벤트
+        const filterMap = [
+            { btn: 'seasonBtn', dropdown: 'seasonDropdown', key: 'season' },
+            { btn: 'regionBtn', dropdown: 'regionDropdown', key: 'region' },
+            { btn: 'tierBtn', dropdown: 'tierDropdown', key: 'tier' },
+            { btn: 'schoolLevelBtn', dropdown: 'schoolLevelDropdown', key: 'schoolLevel' },
+            { btn: 'schoolBtn', dropdown: 'schoolDropdown', key: 'school' },
+            { btn: 'courtBtn', dropdown: 'courtDropdown', key: 'court' }
+        ];
+        filterMap.forEach(({btn, dropdown, key}) => {
+            document.getElementById(btn).addEventListener('click', function(e) {
+                document.querySelectorAll('.filter-dropdown').forEach(d => d.classList.remove('show'));
+                document.getElementById(dropdown).classList.toggle('show');
+                e.stopPropagation();
+            });
+            document.querySelectorAll(`#${dropdown} button`).forEach(opt => {
+                opt.addEventListener('click', function(e) {
+                    document.getElementById(btn).textContent = this.textContent;
+                    document.getElementById(btn).classList.add('active');
+                    filterState[key] = this.dataset.value;
+                    render();
+                    document.getElementById(dropdown).classList.remove('show');
+                    e.stopPropagation();
+                });
+            });
+        });
+        document.body.addEventListener('click', () => {
+            document.querySelectorAll('.filter-dropdown').forEach(d => d.classList.remove('show'));
+        });
+
+        // 팀 정보 가져오기
+        function getTeamById(teamId) {
+            return teams.find(team => team.id === teamId);
         }
 
-        // 페이지 로드 시 데이터 표시
-        window.onload = function() {
-            // 데이터 유효성 검사 실행
-            if (!validateData()) {
-                return; // 오류가 있으면 처리 중단
-            }
-            
-            // 데이터 계산 및 동기화 처리
-            processData();
-            
-            // 선수 기록 업데이트
-            updatePlayerStats();
-            // 팀 필터 버튼 생성
-            generateTeamFilterButtons();
-            // 기본 필터 설정 (인천학생문화회관으로 초기화)
-            filterMatchesByCourt('인천학생문화회관');
-            updateTopTeamMessage('인천학생문화회관');
-            
-            // 학생 구분 필터 이벤트 리스너
-            document.querySelectorAll('.student-filter-btn').forEach(button => {
-                button.addEventListener('click', function() {
-                    const type = this.getAttribute('data-type');
-                    
-                    // 활성화된 버튼 스타일 변경
-                    document.querySelectorAll('.student-filter-btn').forEach(btn => {
-                        btn.classList.remove('active');
-                    });
-                    this.classList.add('active');
-                    
-                    // 선수 기록 필터링
-                    filterPlayerStats(type);
-                });
-            });
-            
-            // 필터 종류 선택 이벤트 리스너
-            document.querySelectorAll('.filter-type-btn').forEach(button => {
-                button.addEventListener('click', function() {
-                    const filterType = this.getAttribute('data-filter');
-                    
-                    // 필터 종류 버튼 활성화
-                    document.querySelectorAll('.filter-type-btn').forEach(btn => {
-                        btn.classList.remove('active');
-                    });
-                    this.classList.add('active');
-                    
-                    // 해당 필터 그룹 표시
-                    document.querySelectorAll('.filter-group').forEach(group => {
-                        group.classList.remove('active');
-                    });
-                    document.querySelector(`.${filterType}-filter`).classList.add('active');
-                    
-                    // 필터 초기화
-                    if (filterType === 'court') {
-                        // 기본적으로 첫 번째 코트 선택
-                        const firstCourtBtn = document.querySelector('.court-filter-btn');
-                        if (firstCourtBtn) {
-                            firstCourtBtn.click();
-                        }
-                    } else if (filterType === 'team') {
-                        // 기본적으로 첫 번째 팀 선택
-                        const firstTeamBtn = document.querySelector('.team-filter-btn');
-                        if (firstTeamBtn) {
-                            firstTeamBtn.click();
-                        }
-                    }
-                });
-            });
-            
-            // 코트 필터 이벤트 리스너 등록
-            document.querySelectorAll('.court-filter-btn').forEach(button => {
-                button.addEventListener('click', function() {
-                    const court = this.getAttribute('data-court');
-                    filterMatchesByCourt(court);
-                    updateTopTeamMessage(court);
-                    
-                    // 활성화된 버튼 스타일 변경
-                    document.querySelectorAll('.court-filter-btn').forEach(btn => {
-                        btn.classList.remove('active');
-                    });
-                    this.classList.add('active');
-                });
-            });
-            
-            // 더보기 버튼 이벤트 리스너
-            document.getElementById('load-more-players').addEventListener('click', function() {
-                playerDisplayCount += 10; // 10명씩 추가
-                updatePlayerStats();
-                
-                // 모든 선수를 표시한 경우 버튼 숨기기
-                if (playerDisplayCount >= playerStats.length) {
-                    this.style.display = 'none';
-                }
-            });
-        };
-        
-        // 데이터 처리 및 계산 - 모든 통계를 재계산하고 동기화
-        function processData() {
-            // 1. 선수별 통계 초기화
-            playerStats = players.map(player => {
-                return {
-                    ...player,
-                    games: 0,
-                    wins: 0,
-                    losses: 0,
-                    recent: [], // 최근 5경기 결과
-                    highestTier: getPlayerHighestTier(player) // 소속된 팀 중 가장 높은 티어
-                };
-            });
-            
-            // 2. 팀별 데이터 구조 초기화
-            const teamData = {};
-            teams.forEach(team => {
-                teamData[team.name] = {
-                    name: team.name,
-                    games: 0,
-                    wins: 0,
-                    losses: 0,
-                    players: [],
-                    tier: team.tier
-                };
-            });
-            
-            // 각 선수를 해당 팀에 연결
-            players.forEach(player => {
-                player.teams.forEach(teamName => {
-                    if (teamData[teamName]) {
-                        teamData[teamName].players.push(player.id);
-                    }
-                });
-            });
-            
-            // 3. 경기 결과를 기반으로 선수 및 팀 통계 계산
-            // 시간순으로 정렬 (최신 경기가 앞에 오도록)
-            const sortedMatches = [...matchResults].sort((a, b) => new Date(b.date) - new Date(a.date));
-            
-            // 모든 경기 결과에 대해 처리
-            sortedMatches.forEach(match => {
-                const isTeamAWin = match.scoreA > match.scoreB;
-                
-                // A팀 관련 업데이트
-                if (teamData[match.teamA]) {
-                    teamData[match.teamA].games++;
-                    if (isTeamAWin) {
-                        teamData[match.teamA].wins++;
-                    } else {
-                        teamData[match.teamA].losses++;
-                    }
-                }
-                
-                // B팀 관련 업데이트
-                if (teamData[match.teamB]) {
-                    teamData[match.teamB].games++;
-                    if (!isTeamAWin) {
-                        teamData[match.teamB].wins++;
-                    } else {
-                        teamData[match.teamB].losses++;
-                    }
-                }
-                
-                // A팀 선수 통계 업데이트
-                match.teamAPlayers.forEach(playerId => {
-                    const playerIndex = playerStats.findIndex(p => p.id === playerId);
-                    if (playerIndex !== -1) {
-                        playerStats[playerIndex].games++;
-                        if (isTeamAWin) {
-                            playerStats[playerIndex].wins++;
-                            playerStats[playerIndex].recent.unshift("승"); // 최신 결과를 앞에 추가
-                        } else {
-                            playerStats[playerIndex].losses++;
-                            playerStats[playerIndex].recent.unshift("패");
-                        }
-                    }
-                });
-                
-                // B팀 선수 통계 업데이트
-                match.teamBPlayers.forEach(playerId => {
-                    const playerIndex = playerStats.findIndex(p => p.id === playerId);
-                    if (playerIndex !== -1) {
-                        playerStats[playerIndex].games++;
-                        if (!isTeamAWin) {
-                            playerStats[playerIndex].wins++;
-                            playerStats[playerIndex].recent.unshift("승");
-                        } else {
-                            playerStats[playerIndex].losses++;
-                            playerStats[playerIndex].recent.unshift("패");
-                        }
-                    }
-                });
-            });
-            
-            // 각 선수의 최근 전적을 최대 5개로 제한
-            playerStats.forEach(player => {
-                player.recent = player.recent.slice(0, 5);
-            });
-            
-            // 4. 팀 순위 계산 (승률 기준)
-            teamRankings = Object.values(teamData).sort((a, b) => {
-                const winRateA = a.wins / a.games || 0;
-                const winRateB = b.wins / b.games || 0;
-                
-                if (winRateB === winRateA) {
-                    return b.games - a.games;
-                }
-                return winRateB - winRateA;
-            });
-            
-            // 순위 정보 추가
-            teamRankings.forEach((team, index) => {
-                team.rank = index + 1;
-            });
-            
-            // 5. 표시용 경기 결과 형식화
-            formattedMatches = sortedMatches.map(match => {
-                // A팀 선수 이름 가져오기
-                const teamAPlayerNames = match.teamAPlayers.map(id => {
-                    const player = players.find(p => p.id === id);
-                    return player ? player.name : 'Unknown';
-                }).join(', ');
-                
-                // B팀 선수 이름 가져오기
-                const teamBPlayerNames = match.teamBPlayers.map(id => {
-                    const player = players.find(p => p.id === id);
-                    return player ? player.name : 'Unknown';
-                }).join(', ');
-                
-                return {
-                    id: match.id,
-                    date: match.date,
-                    court: match.court,
-                    teamA: `${match.teamA} (${teamAPlayerNames})`,
-                    teamB: `${match.teamB} (${teamBPlayerNames})`,
-                    scoreA: match.scoreA,
-                    scoreB: match.scoreB,
-                    originalTeamA: match.teamA,
-                    originalTeamB: match.teamB
-                };
-            });
-        }
-        
-        // 선수가 소속된 팀 중 가장 높은 티어를 반환하는 함수
-        function getPlayerHighestTier(player) {
-            const tierRank = {
-                'bronze': 1,
-                'silver': 2,
-                'gold': 3,
-                'platinum': 4,
-                'diamond': 5
-            };
-            
-            let highestTier = 'bronze'; // 기본값
-            
-            player.teams.forEach(teamName => {
-                const team = teams.find(t => t.name === teamName);
-                if (team && tierRank[team.tier] > tierRank[highestTier]) {
-                    highestTier = team.tier;
-                }
-            });
-            
-            return highestTier;
-        }
-        
-        // 팀 필터 버튼 동적 생성
-        function generateTeamFilterButtons() {
-            // 순위별로 정렬된 팀 목록 사용
-            const teamFilter = document.querySelector('.team-filter');
-            teamFilter.innerHTML = ''; // 기존 버튼 초기화
-            
-            // 팀 버튼 추가 (순위 순으로)
-            teamRankings.forEach((team, index) => {
-                const button = document.createElement('button');
-                button.className = 'team-filter-btn';
-                button.setAttribute('data-team', team.name);
-                
-                // 티어 배지 생성
-                const tierBadge = `<span class="tier tier-${team.tier} small-tier">${getTierText(team.tier)}</span>`;
-                button.innerHTML = `${team.rank}. ${team.name} ${tierBadge}`;
-                
-                // 첫 번째 팀 버튼은 기본 선택
-                if (index === 0) {
-                    button.classList.add('active');
-                }
-                
-                // 클릭 이벤트 추가
-                button.addEventListener('click', function() {
-                    const team = this.getAttribute('data-team');
-                    filterMatchesByTeam(team);
-                    
-                    // 활성화된 버튼 스타일 변경
-                    document.querySelectorAll('.team-filter-btn').forEach(btn => {
-                        btn.classList.remove('active');
-                    });
-                    this.classList.add('active');
-                });
-                
-                teamFilter.appendChild(button);
-            });
-        }
-        
-        // 팀별 경기 필터링 함수
-        function filterMatchesByTeam(team) {
-            const filteredMatches = formattedMatches.filter(match => {
-                return match.originalTeamA === team || match.originalTeamB === team;
-            });
-            
-            updateCourtMatches(filteredMatches, team);
-            
-            // 팀 관련 메시지 표시
-            const messageElement = document.getElementById('top-team-message');
-            const teamInfo = teamRankings.find(t => t.name === team);
-            
-            if (teamInfo) {
-                const winRate = teamInfo.games > 0 ? ((teamInfo.wins / teamInfo.games) * 100).toFixed(1) : '0.0';
-                const tierBadge = `<span class="tier tier-${teamInfo.tier}">${getTierText(teamInfo.tier)}</span>`;
-                
-                messageElement.innerHTML = `
-                    <div class="team-info-card">
-                        <div class="team-info-header">
-                            <span class="team-rank">${teamInfo.rank}위</span>
-                            <strong style="font-size: 20px;">${team}</strong>
-                            ${tierBadge}
-                        </div>
-                        <div class="team-info-stats">
-                            <div class="team-stat-item">
-                                <span class="team-stat-value">${teamInfo.games}</span>
-                                <span class="team-stat-label">경기수</span>
-                            </div>
-                            <div class="team-stat-item">
-                                <span class="team-stat-value win">${teamInfo.wins}</span>
-                                <span class="team-stat-label">승</span>
-                            </div>
-                            <div class="team-stat-item">
-                                <span class="team-stat-value loss">${teamInfo.losses}</span>
-                                <span class="team-stat-label">패</span>
-                            </div>
-                            <div class="team-stat-item">
-                                <span class="team-stat-value">${winRate}%</span>
-                                <span class="team-stat-label">승률</span>
-                            </div>
-                        </div>
-                    </div>
-                `;
-            }
+        // 선수 정보 가져오기
+        function getPlayerById(playerId) {
+            return players.find(player => player.id === playerId);
         }
 
-        // 코트별 경기 필터링 함수
-        function filterMatchesByCourt(court) {
-            const filteredMatches = formattedMatches.filter(match => match.court === court);
-            updateCourtMatches(filteredMatches);
-        }
-        
-        // 1등 팀 메시지 업데이트
-        function updateTopTeamMessage(court) {
-            const messageElement = document.getElementById('top-team-message');
-            let topTeam = getTopTeam(court);
-            
-            if (court === '인천학생문화회관') {
-                messageElement.innerHTML = `${topTeam} 🏆 <span class="highlight-text">미쳐 날뛰고 있습니다!</span>`;
-            } else {
-                messageElement.innerHTML = `${topTeam} 🏆 <span class="highlight-text">점령중입니다!</span>`;
-            }
-        }
-        
-        // 특정 코트에서 가장 많이 이긴 팀 구하기
-        function getTopTeam(court) {
-            // 관련 경기 필터링
-            const relevantMatches = formattedMatches.filter(match => match.court === court);
-            
-            // 팀별 승리 횟수 집계
-            const teamWins = {};
-            
-            relevantMatches.forEach(match => {
-                const isTeamAWin = match.scoreA > match.scoreB;
-                
-                if (isTeamAWin) {
-                    teamWins[match.originalTeamA] = (teamWins[match.originalTeamA] || 0) + 1;
-                } else {
-                    teamWins[match.originalTeamB] = (teamWins[match.originalTeamB] || 0) + 1;
-                }
-            });
-            
-            // 승리 횟수가 가장 많은 팀 찾기
-            let maxWins = 0;
-            let topTeam = "아직 경기가 없습니다";
-            
-            for (const team in teamWins) {
-                if (teamWins[team] > maxWins) {
-                    maxWins = teamWins[team];
-                    topTeam = team;
-                }
-            }
-            
-            return topTeam;
+        // 팀카드 이미지 가져오기 함수
+        function getTeamCardImage(teamName) {
+            if (teamName === "SD앨리웁") return "teamcard_sd앨리웁.png";
+            if (teamName === "광성") return "teamcard_gwangsung.png";
+            return null;
         }
 
-        // 티어별 표시 텍스트 반환
-        function getTierText(tier) {
-            switch(tier) {
-                case 'bronze': return '브론즈';
-                case 'silver': return '실버';
-                case 'gold': return '골드';
-                case 'platinum': return '플래티넘';
-                case 'diamond': return '다이아몬드';
-                default: return '없음';
-            }
+        // 팀 이름에 카드 추가하는 함수
+        function renderTeamNameWithCard(team) {
+            const imgSrc = getTeamCardImage(team.name);
+            if (!imgSrc) return team.name;
+            return `
+                <span class="team-name-hover">
+                    ${team.name}
+                    <span class="team-card-tooltip">
+                        <img src="${imgSrc}" alt="${team.name} 카드">
+                    </span>
+                </span>
+            `;
         }
 
-        // 선수 기록 업데이트
-        function updatePlayerStats() {
-            // 승률로 정렬 (승률이 같을 경우 경기수가 많은 순)
-            const sortedPlayers = [...playerStats].sort((a, b) => {
-                const winRateA = a.wins / a.games || 0;
-                const winRateB = b.wins / b.games || 0;
-                
-                if (winRateB === winRateA) {
-                    return b.games - a.games;
-                }
-                return winRateB - winRateA;
-            });
-            
-            const tableBody = document.getElementById('player-stats-body');
-            tableBody.innerHTML = '';
-            
-            // 최대 playerDisplayCount 명까지만 표시
-            const playersToShow = sortedPlayers.slice(0, playerDisplayCount);
-            
-            playersToShow.forEach((player, index) => {
-                const row = document.createElement('tr');
-                
-                // 최근 전적 마크 생성
-                const recentResults = player.recent.map(result => {
-                    return `<span class="${result === '승' ? 'win-mark' : 'loss-mark'}">${result}</span>`;
-                }).join('');
-                
-                // 티어 배지 생성
-                const tierBadge = `<span class="tier tier-${player.highestTier}">${getTierText(player.highestTier)}</span>`;
-                
-                // 소속팀 표시 - 쉼표로 구분
-                const teamsDisplay = player.teams.join(', ');
-                
-                row.innerHTML = `
-                    <td>${index + 1}</td>
-                    <td>${player.name}</td>
-                    <td>${player.school}</td>
-                    <td>${teamsDisplay}</td>
-                    <td>${player.games}</td>
-                    <td class="win">${player.wins}</td>
-                    <td class="loss">${player.losses}</td>
-                    <td class="recent">${recentResults}</td>
-                    <td>${tierBadge}</td>
-                `;
-                
-                tableBody.appendChild(row);
-            });
-            
-            // 더보기 버튼 표시 여부 설정
-            const loadMoreBtn = document.getElementById('load-more-players');
-            if (playerDisplayCount >= sortedPlayers.length) {
-                loadMoreBtn.style.display = 'none';
-            } else {
-                loadMoreBtn.style.display = 'block';
-            }
+        // 매치 필터링
+        function getFilteredMatches(type) {
+            const matches = type === "랭킹전" ? rankingMatches : generalMatches;
+            return matches
+                .filter(m => !filterState.season || m.season === filterState.season)
+                .filter(m => !filterState.region || m.region === filterState.region)
+                .filter(m => {
+                    if (!filterState.tier) return true;
+                    const teamA = getTeamById(m.teamA_id);
+                    const teamB = getTeamById(m.teamB_id);
+                    return teamA.tier === filterState.tier || teamB.tier === filterState.tier;
+                })
+                .filter(m => {
+                    if (!filterState.schoolLevel) return true;
+                    const teamA = getTeamById(m.teamA_id);
+                    const teamB = getTeamById(m.teamB_id);
+                    return teamA.schoolLevel === filterState.schoolLevel || teamB.schoolLevel === filterState.schoolLevel;
+                })
+                .filter(m => {
+                    if (!filterState.school) return true;
+                    const teamA = getTeamById(m.teamA_id);
+                    const teamB = getTeamById(m.teamB_id);
+                    return teamA.school === filterState.school || teamB.school === filterState.school;
+                })
+                .filter(m => !filterState.court || m.court === filterState.court)
+                .sort((a, b) => new Date(b.date) - new Date(a.date));
         }
 
-        // 코트별 경기 결과 업데이트
-        function updateCourtMatches(matches = formattedMatches, selectedTeam = null) {
-            // 최신 경기가 위에 오도록 정렬
-            const sortedMatches = [...matches].sort((a, b) => new Date(b.date) - new Date(a.date));
-            
-            const tableBody = document.getElementById('court-matches-body');
-            tableBody.innerHTML = '';
-            
-            if (sortedMatches.length === 0) {
-                const row = document.createElement('tr');
-                row.innerHTML = '<td colspan="5">해당 조건에 맞는 경기가 없습니다.</td>';
-                tableBody.appendChild(row);
+        // 표 렌더링 함수
+        function renderMatchTable(matchList, tbodyId) {
+            const tbody = document.getElementById(tbodyId);
+            tbody.innerHTML = "";
+            if (matchList.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="6">${tbodyId === "rankingMatches" ? "랭킹전 기록이 없습니다." : "일반전 기록이 없습니다."}</td></tr>`;
                 return;
             }
-            
-            sortedMatches.forEach(match => {
-                const row = document.createElement('tr');
+            matchList.forEach(match => {
+                const teamA = getTeamById(match.teamA_id);
+                const teamB = getTeamById(match.teamB_id);
+                const aWin = match.scoreA > match.scoreB;
+                const bWin = match.scoreB > match.scoreA;
+                const aTier = teamA.tier ? `<span class="tier-badge ${teamA.tier}">${teamA.tier}</span>` : "";
+                const bTier = teamB.tier ? `<span class="tier-badge ${teamB.tier}">${teamB.tier}</span>` : "";
                 
-                // 선택한 팀이 존재하고, 그 팀이 B팀인 경우 위치 교환
-                let displayTeamA = match.teamA;
-                let displayTeamB = match.teamB;
-                let displayScoreA = match.scoreA;
-                let displayScoreB = match.scoreB;
-                let isTeamAWin = match.scoreA > match.scoreB;
-                
-                if (selectedTeam && match.originalTeamB === selectedTeam) {
-                    // 팀 위치 교환
-                    displayTeamA = match.teamB;
-                    displayTeamB = match.teamA;
-                    displayScoreA = match.scoreB;
-                    displayScoreB = match.scoreA;
-                    isTeamAWin = match.scoreB > match.scoreA; // 승패 판정도 교환
-                }
-                
-                // 승패에 따른 스타일 적용
-                const teamAClass = isTeamAWin ? 'win-team' : 'loss-team';
-                const teamBClass = isTeamAWin ? 'loss-team' : 'win-team';
-                
-                row.innerHTML = `
-                    <td>${match.date}</td>
-                    <td>${match.court}</td>
-                    <td class="${teamAClass}">${displayTeamA}</td>
-                    <td>${displayScoreA} : ${displayScoreB}</td>
-                    <td class="${teamBClass}">${displayTeamB}</td>
-                `;
-                
-                tableBody.appendChild(row);
+                // 실제 참여 선수 목록
+                const aParticipants = match.participants.teamA
+                    .map(id => getPlayerById(id).name)
+                    .join(', ');
+                const bParticipants = match.participants.teamB
+                    .map(id => getPlayerById(id).name)
+                    .join(', ');
+
+                // 팀 이름에 카드 추가
+                const aTeamName = renderTeamNameWithCard(teamA);
+                const bTeamName = renderTeamNameWithCard(teamB);
+
+                tbody.insertAdjacentHTML("beforeend", `
+                    <tr>
+                        <td>${match.date}</td>
+                        <td>${match.court}</td>
+                        <td class="${aWin ? 'win-bg' : bWin ? 'lose-bg' : ''}">${aTier}${aTeamName} (${aParticipants})</td>
+                        <td><b>${match.scoreA} : ${match.scoreB}</b></td>
+                        <td class="${bWin ? 'win-bg' : aWin ? 'lose-bg' : ''}">${bTier}${bTeamName} (${bParticipants})</td>
+                        <td>${match.season}</td>
+                    </tr>
+                `);
             });
         }
 
-        // 선수 기록 필터링 함수
-        function filterPlayerStats(type) {
-            // 승률로 정렬 (승률이 같을 경우 경기수가 많은 순)
-            let filteredPlayers = [...playerStats];
-            
-            if (type !== 'all') {
-                filteredPlayers = playerStats.filter(player => {
-                    const schoolName = player.school;
-                    const lastChar = schoolName.charAt(schoolName.length - 1);
-                    return type === 'middle' ? lastChar === '중' : lastChar === '고';
-                });
-            }
-            
-            filteredPlayers.sort((a, b) => {
-                const winRateA = a.wins / a.games || 0;
-                const winRateB = b.wins / b.games || 0;
-                
-                if (winRateB === winRateA) {
-                    return b.games - a.games;
-                }
-                return winRateB - winRateA;
-            });
-            
-            const tableBody = document.getElementById('player-stats-body');
-            tableBody.innerHTML = '';
-            
-            // 최대 playerDisplayCount 명까지만 표시
-            const playersToShow = filteredPlayers.slice(0, playerDisplayCount);
-            
-            playersToShow.forEach((player, index) => {
-                const row = document.createElement('tr');
-                
-                // 최근 전적 마크 생성
-                const recentResults = player.recent.map(result => {
-                    return `<span class="${result === '승' ? 'win-mark' : 'loss-mark'}">${result}</span>`;
-                }).join('');
-                
-                // 티어 배지 생성
-                const tierBadge = `<span class="tier tier-${player.highestTier}">${getTierText(player.highestTier)}</span>`;
-                
-                // 소속팀 표시 - 쉼표로 구분
-                const teamsDisplay = player.teams.join(', ');
-                
-                row.innerHTML = `
-                    <td>${index + 1}</td>
-                    <td>${player.name}</td>
-                    <td>${player.school}</td>
-                    <td>${teamsDisplay}</td>
-                    <td>${player.games}</td>
-                    <td class="win">${player.wins}</td>
-                    <td class="loss">${player.losses}</td>
-                    <td class="recent">${recentResults}</td>
-                    <td>${tierBadge}</td>
-                `;
-                
-                tableBody.appendChild(row);
-            });
-            
-            // 더보기 버튼 표시 여부 설정
-            const loadMoreBtn = document.getElementById('load-more-players');
-            if (playerDisplayCount >= filteredPlayers.length) {
-                loadMoreBtn.style.display = 'none';
-            } else {
-                loadMoreBtn.style.display = 'block';
-            }
+        // 전체 렌더링
+        function render() {
+            renderMatchTable(getFilteredMatches("랭킹전"), "rankingMatches");
+            renderMatchTable(getFilteredMatches("일반전"), "generalMatches");
         }
+
+        // 초기화
+        document.querySelectorAll(".filter-btn").forEach(btn => btn.classList.add("active"));
+        render();
     </script>
 </body>
 </html>
