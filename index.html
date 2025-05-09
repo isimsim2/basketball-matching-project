@@ -341,7 +341,7 @@
                     <button data-value="재능중고">재능중고</button>
                     <button data-value="화도진중">화도진중</button>
                     <button data-value="섬말공원">섬말공원</button>
-                    <button data-value="청소년수련관">청소년수련관</button>
+                    <button data-value="성남청소년수련관">성남청소년수련관</button>
                     <button data-value="성남종합운동장">성남종합운동장</button>
                 </div>
             </div>
@@ -397,7 +397,13 @@
             { id: 8, name: "곽도현", school: "광성중학교", team_id: 2 },
             { id: 9, name: "김다울", school: "광성중학교", team_id: 2 },
             { id: 10, name: "서경현", school: "광성중학교", team_id: 2 },
-            { id: 11, name: "임희동", school: "광성중학교", team_id: 2 }
+            { id: 11, name: "임희동", school: "광성중학교", team_id: 2 },
+            { id: 12, name: "최루현", school: "태원고등학교", team_id: 3 },
+            { id: 13, name: "이승민", school: "태원고등학교", team_id: 3 },
+            { id: 14, name: "이철민", school: "태원고등학교", team_id: 3 },
+            { id: 15, name: "ㄱㄱㄱ", school: "태원고등학교", team_id: 4 },
+            { id: 16, name: "ㄴㄴㄴ", school: "태원고등학교", team_id: 4 },
+            { id: 17, name: "ㄷㄷㄷ", school: "태원고등학교", team_id: 4 },
         ];
 
         // 팀 데이터
@@ -417,7 +423,23 @@
                 school: "광성중학교", 
                 schoolLevel: "중학교",
                 region: "인천" 
-            }
+            },
+            { 
+                id: 3,
+                name: "곰베", 
+                tier: "골드", 
+                school: "태원고등학교", 
+                schoolLevel: "고등학교",
+                region: "성남" 
+            },
+            { 
+                id: 4, 
+                name: "msn", 
+                tier: "골드", 
+                school: "태원고등학교", 
+                schoolLevel: "고등학교",
+                region: "성남" 
+            },
         ];
 
         // 랭킹전 데이터
@@ -462,7 +484,7 @@
                 court: "인천학생문화회관",
                 teamA_id: 1,
                 teamB_id: 2,
-                scoreA: 50,
+                scoreA: 30,
                 scoreB: 8,
                 season: "1학기 1시즌",
                 region: "인천",
@@ -470,38 +492,120 @@
                     teamA: [2, 5, 6, 7], // 조한선, 한재윤, 최연호, 희현
                     teamB: [8, 9, 10, 11] // 곽도현, 김다울, 서경현, 임희동
                 }
+            },
+            {
+                id: 203,
+                date: "2025-05-06",
+                court: "섬말공원",
+                teamA_id: 3,
+                teamB_id: 4,
+                scoreA: 9,
+                scoreB: 15,
+                season: "1학기 1시즌",
+                region: "성남",
+                participants: {
+                    teamA: [12, 13, 14], // 최루현, 이승민, 이철민
+                    teamB: [15, 16, 17] // ㄱㄱㄱ, ㄴㄴㄴ, ㄷㄷㄷ
+                }
             }
         ];
+
+        // 지역별 코트/학교 데이터
+        const regionCourts = {
+            "인천": ["인천학생문화회관", "율목공원", "근린공원", "송도중", "광성중고", "동산중고", "재능중고", "화도진중"],
+            "성남": ["섬말공원", "성남청소년수련관", "성남종합운동장"]
+        };
+        const regionSchools = {
+            "인천": ["송도중학교", "광성중학교", "광성고등학교", "동산중학교", "동산고등학교", "재능중학교", "재능고등학교", "화도진중학교"],
+            "성남": ["도촌중학교", "야탑고등학교", "태원고등학교"]
+        };
+        const allCourts = Object.values(regionCourts).flat();
+        const allSchools = Object.values(regionSchools).flat();
 
         // 필터 상태
         const filterState = { season: '', region: '', tier: '', schoolLevel: '', school: '', court: '' };
 
-        // 드롭다운 토글 및 선택 이벤트
-        const filterMap = [
-            { btn: 'seasonBtn', dropdown: 'seasonDropdown', key: 'season' },
-            { btn: 'regionBtn', dropdown: 'regionDropdown', key: 'region' },
-            { btn: 'tierBtn', dropdown: 'tierDropdown', key: 'tier' },
-            { btn: 'schoolLevelBtn', dropdown: 'schoolLevelDropdown', key: 'schoolLevel' },
-            { btn: 'schoolBtn', dropdown: 'schoolDropdown', key: 'school' },
-            { btn: 'courtBtn', dropdown: 'courtDropdown', key: 'court' }
-        ];
-        filterMap.forEach(({btn, dropdown, key}) => {
-            document.getElementById(btn).addEventListener('click', function(e) {
+        // 드롭다운 동적 생성 함수
+        function updateDropdown(dropdownId, btnId, items, label) {
+            const dropdown = document.getElementById(dropdownId);
+            dropdown.innerHTML = `<button data-value="">전체 ${label}</button>`;
+            items.forEach(item => {
+                dropdown.innerHTML += `<button data-value="${item}">${item}</button>`;
+            });
+            // 이벤트 바인딩
+            document.querySelectorAll(`#${dropdownId} button`).forEach(opt => {
+                opt.onclick = function(e) {
+                    document.getElementById(btnId).textContent = this.textContent;
+                    document.getElementById(btnId).classList.add('active');
+                    filterState[dropdownId.replace('Dropdown','')] = this.dataset.value;
+                    render();
+                    dropdown.classList.remove('show');
+                    e.stopPropagation();
+                }
+            });
+        }
+
+        // 드롭다운 토글 이벤트
+        function setupDropdownToggle(btnId, dropdownId) {
+            document.getElementById(btnId).addEventListener('click', function(e) {
                 document.querySelectorAll('.filter-dropdown').forEach(d => d.classList.remove('show'));
-                document.getElementById(dropdown).classList.toggle('show');
+                document.getElementById(dropdownId).classList.toggle('show');
                 e.stopPropagation();
             });
+        }
+
+        // 지역, 시즌, 티어, 학교구분 드롭다운(고정)
+        const staticFilterMap = [
+            { btn: 'seasonBtn', dropdown: 'seasonDropdown', key: 'season', items: ["1학기 1시즌", "1학기 2시즌", "여름방학 시즌", "2학기 1시즌", "2학기 2시즌", "겨울방학 시즌"], label: '시즌' },
+            { btn: 'regionBtn', dropdown: 'regionDropdown', key: 'region', items: ["인천", "성남"], label: '지역' },
+            { btn: 'tierBtn', dropdown: 'tierDropdown', key: 'tier', items: ["다이아", "플래티넘", "골드", "실버", "브론즈"], label: '티어' },
+            { btn: 'schoolLevelBtn', dropdown: 'schoolLevelDropdown', key: 'schoolLevel', items: ["중학교", "고등학교"], label: '학교구분' }
+        ];
+        staticFilterMap.forEach(({btn, dropdown, items, label}) => {
+            updateDropdown(dropdown, btn, items, label);
+            setupDropdownToggle(btn, dropdown);
+        });
+        // 지역, 시즌, 티어, 학교구분 드롭다운 이벤트 바인딩
+        staticFilterMap.forEach(({btn, dropdown, key}) => {
             document.querySelectorAll(`#${dropdown} button`).forEach(opt => {
                 opt.addEventListener('click', function(e) {
                     document.getElementById(btn).textContent = this.textContent;
                     document.getElementById(btn).classList.add('active');
                     filterState[key] = this.dataset.value;
+                    if (key === 'region' || key === 'schoolLevel') {
+                        updateSchoolAndCourtDropdowns();
+                        filterState.school = '';
+                        document.getElementById('schoolBtn').textContent = '전체 소속학교';
+                    }
+                    if (key === 'region') {
+                        filterState.court = '';
+                        document.getElementById('courtBtn').textContent = '전체 코트';
+                    }
                     render();
                     document.getElementById(dropdown).classList.remove('show');
                     e.stopPropagation();
                 });
             });
         });
+        // 학교/코트 드롭다운 동적 생성
+        function updateSchoolAndCourtDropdowns() {
+            let schools = filterState.region && regionSchools[filterState.region] ? regionSchools[filterState.region] : allSchools;
+            // 학교구분(중/고등학교) 필터 적용
+            if (filterState.schoolLevel) {
+                schools = schools.filter(schoolName => {
+                    if (filterState.schoolLevel === '중학교') return schoolName.endsWith('중학교');
+                    if (filterState.schoolLevel === '고등학교') return schoolName.endsWith('고등학교');
+                    return true;
+                });
+            }
+            let courts = filterState.region && regionCourts[filterState.region] ? regionCourts[filterState.region] : allCourts;
+            updateDropdown('schoolDropdown', 'schoolBtn', schools, '소속학교');
+            updateDropdown('courtDropdown', 'courtBtn', courts, '코트');
+        }
+        setupDropdownToggle('schoolBtn', 'schoolDropdown');
+        setupDropdownToggle('courtBtn', 'courtDropdown');
+        updateSchoolAndCourtDropdowns();
+        // 바깥 클릭시 드롭다운 닫기
         document.body.addEventListener('click', () => {
             document.querySelectorAll('.filter-dropdown').forEach(d => d.classList.remove('show'));
         });
@@ -537,7 +641,7 @@
             `;
         }
 
-        // 매치 필터링
+        // 매치 필터링 함수
         function getFilteredMatches(type) {
             const matches = type === "랭킹전" ? rankingMatches : generalMatches;
             return matches
@@ -547,6 +651,7 @@
                     if (!filterState.tier) return true;
                     const teamA = getTeamById(m.teamA_id);
                     const teamB = getTeamById(m.teamB_id);
+                    // 티어가 하나라도 포함되면 통과
                     return teamA.tier === filterState.tier || teamB.tier === filterState.tier;
                 })
                 .filter(m => {
