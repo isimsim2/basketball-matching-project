@@ -262,6 +262,14 @@
             }
         }
     </style>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-FE44S34T4T"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-FE44S34T4T');
+    </script>
 </head>
 <body>
     <div class="container">
@@ -720,6 +728,43 @@
         // 초기화
         document.querySelectorAll(".filter-btn").forEach(btn => btn.classList.add("active"));
         render();
+
+        // === GA4 커스텀 이벤트 ===
+        // 1. 경기하기 버튼 클릭
+        document.addEventListener('DOMContentLoaded', function() {
+          var regBtn = document.querySelector('.register-btn');
+          if (regBtn) {
+            regBtn.addEventListener('click', function() {
+              if (typeof gtag === 'function') {
+                gtag('event', '경기하기_버튼_클릭', { location: window.location.pathname });
+              }
+            });
+          }
+          // 2. 필터 클릭
+          document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+              if (typeof gtag === 'function') {
+                gtag('event', '필터_클릭', {
+                  filter_name: this.id,
+                  filter_text: this.textContent,
+                  location: window.location.pathname
+                });
+              }
+            });
+          });
+          // 3. 팀카드 hover
+          document.addEventListener('mouseover', function(e) {
+            const hoverEl = e.target.closest('.team-name-hover');
+            if (hoverEl) {
+              if (typeof gtag === 'function') {
+                gtag('event', '팀카드_hover', {
+                  team_name: hoverEl.textContent.trim(),
+                  location: window.location.pathname
+                });
+              }
+            }
+          }, true);
+        });
     </script>
 </body>
 </html>
