@@ -391,7 +391,7 @@
             </table>
         </div>
     </div>
-    <button class="register-btn" onclick="window.open('https://docs.google.com/forms/d/e/1FAIpQLSfzBQ0-EJqGz_NQ45KASLq8Pt4v6PkkNojuFPV_MMJOIeCcwA/viewform?usp=dialog', '_blank')">경기하기</button>
+    <button class="register-btn" id="registerBtn">경기하기</button>
     <script>
         // 선수 데이터
         const players = [
@@ -773,9 +773,19 @@
         // === GA4 커스텀 이벤트 ===
         // 1. 경기하기 버튼 클릭
         document.addEventListener('DOMContentLoaded', function() {
-          var regBtn = document.querySelector('.register-btn');
+          var regBtn = document.getElementById('registerBtn');
           if (regBtn) {
             regBtn.addEventListener('click', function() {
+              // 현재 URL의 UTM 파라미터 추출
+              const params = new URLSearchParams(window.location.search);
+              let utm = '';
+              ['utm_source','utm_medium','utm_campaign','utm_term','utm_content'].forEach(key => {
+                if (params.get(key)) utm += `&${key}=${params.get(key)}`;
+              });
+              // 구글폼 URL에 UTM 파라미터 추가
+              let url = 'https://docs.google.com/forms/d/e/1FAIpQLSfzBQ0-EJqGz_NQ45KASLq8Pt4v6PkkNojuFPV_MMJOIeCcwA/viewform?usp=dialog';
+              if (utm) url += utm.replace('&','&'); // 이미 ?가 있으니 &로 붙임
+              window.open(url, '_blank');
               if (typeof gtag === 'function') {
                 gtag('event', '경기하기_버튼_클릭', { location: window.location.pathname });
               }
