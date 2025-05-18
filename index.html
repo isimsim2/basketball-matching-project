@@ -126,8 +126,21 @@
         .tier-badge.골드 { 
             background: linear-gradient(to bottom, #ffd700, #cca800);
         }
-        .tier-badge.실버 { 
+        .tier-badge.실버 {
             background: linear-gradient(to bottom, #c0c0c0, #a8a8a8);
+        }
+        .tier-badge.실버.step1 {
+            background: linear-gradient(to bottom, #b0b0b0, #888888);
+        }
+        .tier-badge.실버.step2 {
+            background: linear-gradient(to bottom, #c8c8c8, #b0b0b0);
+        }
+        .tier-badge.실버.step3 {
+            background: linear-gradient(to bottom, #dddddd, #cccccc);
+        }
+        .tier-badge.실버.step4 {
+            background: linear-gradient(to bottom, #f2f2f2, #e0e0e0);
+            color: #fff;
         }
         .tier-badge.브론즈 { 
             background: linear-gradient(to bottom, #cd7f32, #a05a2c);
@@ -331,6 +344,7 @@
                     <button data-value="재능중학교">재능중학교</button>
                     <button data-value="재능고등학교">재능고등학교</button>
                     <button data-value="화도진중학교">화도진중학교</button>
+                    <button data-value="인하부고등학교">인하부고등학교</button>
                     <button data-value="도촌중학교">도촌중학교</button>
                     <button data-value="야탑고등학교">야탑고등학교</button>
                     <button data-value="태원고등학교">태원고등학교</button>
@@ -348,6 +362,7 @@
                     <button data-value="동산중고">동산중고</button>
                     <button data-value="재능중고">재능중고</button>
                     <button data-value="화도진중">화도진중</button>
+                    <button data-value="인하대학교">인하대학교</button>
                     <button data-value="섬말공원">섬말공원</button>
                     <button data-value="성남청소년수련관">성남청소년수련관</button>
                     <button data-value="성남종합운동장">성남종합운동장</button>
@@ -419,7 +434,18 @@
             { id: 22, name: "이한빈", school: "화도진중학교", team_id: 6 },
             { id: 23, name: "장준희", school: "화도진중학교", team_id: 6 },
             { id: 24, name: "서주원", school: "화도진중학교", team_id: 6 },
-            
+            { id: 25, name: "이지민", school: "제물포고등학교", team_id: 7 },
+            { id: 26, name: "양시문", school: "제물포고등학교", team_id: 7 },
+            { id: 27, name: "김세현", school: "제물포고등학교", team_id: 7 },
+            { id: 28, name: "윤영돈", school: "제물포고등학교", team_id: 7 },
+            { id: 29, name: "고재혁", school: "제물포고등학교", team_id: 7 },
+            { id: 30, name: "이태율", school: "제물포고등학교", team_id: 7 },
+            { id: 31, name: "이호찬", school: "인하부고등학교", team_id: 8 },
+            { id: 32, name: "이상원", school: "인하부고등학교", team_id: 8 },
+            { id: 33, name: "김경민", school: "인하부고등학교", team_id: 8 },
+            { id: 34, name: "이주형", school: "인하부고등학교", team_id: 9 },
+            { id: 35, name: "육재준", school: "인하부고등학교", team_id: 9 },
+            { id: 36, name: "...", school: "인하부고등학교", team_id: 9 },
         ];
 
         // 팀 데이터
@@ -428,6 +454,8 @@
                 id: 1, 
                 name: "SD앨리웁", 
                 tier: "실버", 
+                tierStep: 1,
+                tierPoint: 0,
                 school: "송도중학교", 
                 schoolLevel: "중학교",
                 region: "인천" 
@@ -436,6 +464,8 @@
                 id: 2, 
                 name: "광성", 
                 tier: "브론즈", 
+                tierStep: 1,
+                tierPoint: 0,
                 school: "광성중학교", 
                 schoolLevel: "중학교",
                 region: "인천" 
@@ -444,6 +474,8 @@
                 id: 3,
                 name: "곰베", 
                 tier: "골드", 
+                tierStep: 1,
+                tierPoint: 0,
                 school: "태원고등학교", 
                 schoolLevel: "고등학교",
                 region: "성남" 
@@ -452,6 +484,8 @@
                 id: 4, 
                 name: "msn", 
                 tier: "골드", 
+                tierStep: 1,
+                tierPoint: 0,
                 school: "태원고등학교", 
                 schoolLevel: "고등학교",
                 region: "성남" 
@@ -459,7 +493,9 @@
             { 
                 id: 5, 
                 name: "레드2", 
-                tier: "골드", 
+                tier: "실버", 
+                tierStep: 1,
+                tierPoint: 40,
                 school: "동산고등학교", 
                 schoolLevel: "고등학교",
                 region: "인천" 
@@ -468,8 +504,40 @@
                 id: 6, 
                 name: "화도진",
                 tier: "브론즈", 
+                tierStep: 1,
+                tierPoint: 0,
                 school: "화도진중학교", 
                 schoolLevel: "중학교",
+                region: "인천"
+            },
+            { 
+                id: 7,
+                name: "JMP",
+                tier: "실버", 
+                tierStep: 1,
+                tierPoint: 20,
+                school: "제물포고등학교", 
+                schoolLevel: "고등학교",
+                region: "인천"
+            },
+            { 
+                id: 8, 
+                name: "3EGG",
+                tier: "실버", 
+                tierStep: 3,
+                tierPoint: 20,
+                school: "인하부고등학교", 
+                schoolLevel: "고등학교",
+                region: "인천"
+            },
+            { 
+                id: 9, 
+                name: "재준이와아이들",
+                tier: "실버", 
+                tierStep: 4,
+                tierPoint: 80,
+                school: "인하부고등학교", 
+                schoolLevel: "고등학교",
                 region: "인천"
             },
         ];
@@ -497,7 +565,7 @@
                 court: "인천학생문화회관",
                 teamA_id: 1,
                 teamB_id: 2,
-                scoreA: 24,
+                scoreA: 15,
                 scoreB: 8,
                 season: "1학기 1시즌",
                 region: "인천",
@@ -510,15 +578,105 @@
                 id: 103,
                 date: "2025-05-11",
                 court: "인천학생문화회관",
-                teamA_id: 5,
-                teamB_id: 6,
+                teamA_id: 5, // 레드2
+                teamB_id: 6, // 화도진
                 scoreA: 21,
                 scoreB: 9,
                 season: "1학기 1시즌",
                 region: "인천",
                 participants: {
-                    teamA: [18, 19, 20,21], // 박정빈, 조영준, 김민성, 박재연
+                    teamA: [18, 19, 20, 21], // 박정빈, 조영준, 김민성, 박재연
                     teamB: [22, 23, 24] // 이한빈, 장준희, 서주원
+                }
+            },
+            {
+                id: 104,
+                date: "2025-05-18",
+                court: "인하대학교",
+                teamA_id: 7,
+                teamB_id: 8,
+                scoreA: 15,
+                scoreB: 5,
+                season: "1학기 1시즌",
+                region: "인천",
+                participants: {
+                    teamA: [25, 29, 30], // 이지민, 고재혁, 이태율
+                    teamB: [31, 32, 33] // 이호찬, 이상원, 김경민
+                }
+            },
+            {
+                id: 105,
+                date: "2025-05-18",
+                court: "인하대학교",
+                teamA_id: 9,
+                teamB_id: 5,
+                scoreA: 12,
+                scoreB: 15,
+                season: "1학기 1시즌",
+                region: "인천",
+                participants: {
+                    teamA: [34, 35, 36], // 이주형, 육재준, ...
+                    teamB: [18, 19, 20] // 조영준, 박정빈, 김민성
+                }
+            },
+            {
+                id: 106,
+                date: "2025-05-18",
+                court: "인하대학교",
+                teamA_id: 7,
+                teamB_id: 5,
+                scoreA: 14,
+                scoreB: 15,
+                season: "1학기 1시즌",
+                region: "인천",
+                participants: {
+                    teamA: [25, 29, 30], // 이지민, 고재혁, 이태율
+                    teamB: [18, 19, 20] // 조영준, 박정빈, 김민성
+                }
+            },
+            {
+                id: 107,
+                date: "2025-05-18",
+                court: "인하대학교",
+                teamA_id: 8,
+                teamB_id: 9,
+                scoreA: 15,
+                scoreB: 14, 
+                season: "1학기 1시즌",
+                region: "인천",
+                participants: {
+                    teamA: [31, 32, 33], // 이호찬, 이상원, 김경민
+                    teamB: [34, 35, 36] // 이주형, 육재준, ...
+                }
+            },
+            {
+                id: 108,
+                date: "2025-05-18",
+                court: "인하대학교",
+                teamA_id: 8,
+                teamB_id: 5,
+                scoreA: 14,
+                scoreB: 15,
+                season: "1학기 1시즌",
+                region: "인천",
+                participants: {
+                    teamA: [31, 32, 33], // 이호찬, 이상원, 김경민
+                    teamB: [18, 19, 20] // 조영준, 박정빈, 김민성
+                }
+            },
+            {
+                id: 109,
+                date: "2025-05-18",
+                court: "인하대학교",
+                teamA_id: 7,
+                teamB_id: 9,
+                scoreA: 15,
+                scoreB: 9,
+                season: "1학기 1시즌",
+                region: "인천",
+                participants: {
+                    teamA: [25, 29, 30], // 이지민, 고재혁, 이태율
+                    teamB: [34, 35, 36] // 이주형, 육재준, ...
                 }
             }
         ];
@@ -531,7 +689,7 @@
                 court: "인천학생문화회관",
                 teamA_id: 1,
                 teamB_id: 2,
-                scoreA: 30,
+                scoreA: 15,
                 scoreB: 8,
                 season: "1학기 1시즌",
                 region: "인천",
@@ -679,12 +837,14 @@
         // 팀 이름에 카드 추가하는 함수
         function renderTeamNameWithCard(team) {
             const imgSrc = getTeamCardImage(team.name);
-            if (!imgSrc) return team.name;
+            const stepClass = team.tier ? `step${team.tierStep}` : "";
+            const tierInfo = team.tier ? `<span class=\"tier-badge ${team.tier} ${stepClass}\">[${team.tier} ${team.tierStep} ${team.tierPoint}p]</span>` : "";
+            if (!imgSrc) return `${tierInfo} ${team.name}`;
             return `
-                <span class="team-name-hover">
-                    ${team.name}
-                    <span class="team-card-tooltip">
-                        <img src="${imgSrc}" alt="${team.name} 카드">
+                <span class=\"team-name-hover\">
+                    ${tierInfo} ${team.name}
+                    <span class=\"team-card-tooltip\">
+                        <img src=\"${imgSrc}\" alt=\"${team.name} 카드\">
                     </span>
                 </span>
             `;
@@ -716,7 +876,7 @@
                     return teamA.school === filterState.school || teamB.school === filterState.school;
                 })
                 .filter(m => !filterState.court || m.court === filterState.court)
-                .sort((a, b) => new Date(b.date) - new Date(a.date));
+                .sort((a, b) => b.id - a.id);
         }
 
         // 표 렌더링 함수
@@ -732,8 +892,6 @@
                 const teamB = getTeamById(match.teamB_id);
                 const aWin = match.scoreA > match.scoreB;
                 const bWin = match.scoreB > match.scoreA;
-                const aTier = teamA.tier ? `<span class="tier-badge ${teamA.tier}">${teamA.tier}</span>` : "";
-                const bTier = teamB.tier ? `<span class="tier-badge ${teamB.tier}">${teamB.tier}</span>` : "";
                 
                 // 실제 참여 선수 목록
                 const aParticipants = match.participants.teamA
@@ -751,9 +909,9 @@
                     <tr>
                         <td>${match.date}</td>
                         <td>${match.court}</td>
-                        <td class="${aWin ? 'win-bg' : bWin ? 'lose-bg' : ''}">${aTier}${aTeamName} (${aParticipants})</td>
+                        <td class="${aWin ? 'win-bg' : bWin ? 'lose-bg' : ''}">${aTeamName} (${aParticipants})</td>
                         <td><b>${match.scoreA} : ${match.scoreB}</b></td>
-                        <td class="${bWin ? 'win-bg' : aWin ? 'lose-bg' : ''}">${bTier}${bTeamName} (${bParticipants})</td>
+                        <td class="${bWin ? 'win-bg' : aWin ? 'lose-bg' : ''}">${bTeamName} (${bParticipants})</td>
                         <td>${match.season}</td>
                     </tr>
                 `);
